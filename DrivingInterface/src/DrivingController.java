@@ -44,12 +44,12 @@ public class DrivingController {
 		if(frontCar>=0){
 			plusDegree = getDegreeNearFrontCar(toMiddle,frontCar,frontCar+1);
 			if(plusDegree * 180/Math.PI >= 60) {
-				System.out.println("PlusDegree over 60"+" " + plusDegree * 180/Math.PI);
+//				System.out.println("PlusDegree over 60"+" " + plusDegree * 180/Math.PI);
 				plusDegree = 0;
 			}
 		}
 		//index가 0이상이면 50m이내의 앞차가 있다는 의미 60도 이상일땐 핸들을 꺾지않음
-		System.out.println("PlusDegree "+plusDegree * 180/Math.PI);
+//		System.out.println("PlusDegree "+plusDegree * 180/Math.PI);
 		
 		if(plusDegree >0) { 
 			angle -= (plusDegree);
@@ -62,7 +62,7 @@ public class DrivingController {
 			if(toDegree(angle)<=60) plusAcc += 0.1;
 		}
 		
-		
+		System.out.println(toDegree(angle));
 		
 		
 		
@@ -97,7 +97,7 @@ public class DrivingController {
 				
 			}
 		}
-		if(c>=0){	System.out.println("Near Dist : " + minDist);}
+		if(c>=0){	/*System.out.println("Near Dist : " + minDist);*/}
 		return c;
 	}
 	
@@ -108,7 +108,7 @@ public class DrivingController {
 		c = Math.atan2(Math.abs(myMiddle-carMiddle), car) - Math.PI/2 ;
 		
 		
-		System.out.println("Near Degree : " + c + " "+c*180/Math.PI);
+//		System.out.println("Near Degree : " + c + " "+c*180/Math.PI);
 		return c;
 	}
 	//디버깅을 위한 각도 변환
