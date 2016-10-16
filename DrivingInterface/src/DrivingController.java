@@ -64,7 +64,7 @@ public class DrivingController {
 			angle +=  (plusDegree)/2;
 		} else {
 			// 60도이상 벌어져있으면 피할필요가 없다고 판단, 가속도 증가
-			if(toDegree(angle)<=60 && track_dist_straight >=30){
+			if(toDegree(angle)<=40 && track_dist_straight >=30){
 				plusAcc += 0.2;
 			}			
 		}
@@ -72,9 +72,7 @@ public class DrivingController {
 		//직진 트랙 거리를 이용하요 추가 가속도 부여
 		
 		System.out.println("track_dist_straight "+track_dist_straight+ "m");
-		if(track_dist_straight >=50){
-			plusAcc += 0.2;	
-		}else if(track_dist_straight >=100){
+		if(track_dist_straight >=100){
 			plusAcc +=0.3;
 		}else if(track_dist_straight >=150){
 			plusAcc +=0.4;
@@ -82,33 +80,41 @@ public class DrivingController {
 		System.out.println("트랙 비교 "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
 //		System.out.println("트랙 비교 "+(track_current_angle - track_forward_angles[0]));
 
-		if((track_dist_straight >=0) && (track_dist_straight <=50)){
+		if((track_dist_straight >=0) && (track_dist_straight <=40)){
 			if(track_curve_type ==1){//우회전 코스
-				angle +=  track_current_angle - track_forward_angles[0];
+				angle +=  (track_forward_angles[1] - track_forward_angles[0]); //일단 지금은 0으로 의미가 없음
 //				coe_steer =  4*(track_current_angle - track_forward_angles[0]);
-//				plusAcc -= 0.1;
-//				plusBrake += 0.1;
+				if(plusAcc >=0.3){
+					plusAcc -= 0.3;
+				}
+				if(plusBrake >= 1){
+					plusBrake +=0.05;
+				}
 				System.out.println("우회전 angle "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
 			}else if(track_curve_type == 2){//좌회전 코스
-				angle -=  track_current_angle - track_forward_angles[0];
+				angle -=  (track_forward_angles[1] - track_forward_angles[0]);
 //				coe_steer =  -4*(track_current_angle - track_forward_angles[0]);
-//				plusAcc -= 0.1;
-//				plusBrake +=0.1;
+				if(plusAcc >=0.3){
+					plusAcc -= 0.3;
+				}
+				if(plusBrake >= 1){
+					plusBrake +=0.05;
+				}
 				System.out.println("좌회전 angle "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
-			}
-			
-			
+			}			
+		}else{
+			plusBrake = 0;
 		}
 		
-		if((track_current_angle - track_forward_angles[0])*(180/Math.PI)>=4.5){
-			plusBrake = 0.05;
-			angle +=  (track_current_angle - track_forward_angles[0])/2;
-			System.out.println("우측으로 급 커브 angle  "+coe_steer * 180/Math.PI);
-		}else if((track_current_angle - track_forward_angles[0])*(180/Math.PI)<= -4.5){
-			plusBrake = 0.05;
-			angle -=  (track_current_angle - track_forward_angles[0])/2;
-			System.out.println("좌회전으로 급 커브 angle  "+coe_steer * 180/Math.PI);
-		}
+//		if((track_current_angle - track_forward_angles[0])*(180/Math.PI)>=4.5){
+//			plusBrake = 0.05;
+//			angle +=  (track_current_angle - track_forward_angles[0])/2;
+//			System.out.println("우측으로 급 커브 angle  "+coe_steer * 180/Math.PI);
+//		}else if((track_current_angle - track_forward_angles[0])*(180/Math.PI)<= -4.5){
+//			plusBrake = 0.05;
+//			angle -=  (track_current_angle - track_forward_angles[0])/2;
+//			System.out.println("좌회전으로 급 커브 angle  "+coe_steer * 180/Math.PI);
+//		}
 		
 
 //		System.out.println("angle "+angle*(180/Math.PI));
