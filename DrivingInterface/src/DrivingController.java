@@ -38,7 +38,7 @@ public class DrivingController {
 		
 
 		////////////////////// output values		
-		cmd.steer = angle*4+(-1*toMiddle/100);
+		cmd.steer = (angle - toMiddle/track_width) * (1/0.541052);
 		cmd.accel = 0.2;
 		cmd.brake = 0.0;
 		cmd.backward = DrivingInterface.gear_type_forward;
