@@ -26,7 +26,7 @@ public class DrivingAlgorithmLauncher {
 			data.brake = 0;
 		} else {
 			data.accel = 0;
-			data.brake = (data.speed*3)/200;
+			data.brake = (data.speed*3)/100;
 		}
 		data.backward = DrivingInterface.gear_type_forward;
 		
