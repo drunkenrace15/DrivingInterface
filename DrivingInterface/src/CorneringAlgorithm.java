@@ -1,9 +1,9 @@
 
 public class CorneringAlgorithm implements DrivingAlgorithm {
 
-	public DrivingCmd calculate(DrivingCmd cmd) {
+	public DrivingData calculate(DrivingData data) {
 		// OUT - IN - OUT
-		return cmd;
+		return data;
 	}
 
 }

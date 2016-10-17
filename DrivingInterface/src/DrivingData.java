@@ -1,5 +1,5 @@
 
-public class DrivingCmd {
+public class DrivingData {
 	
 	//input parameters
 	double toMiddle;
@@ -35,7 +35,7 @@ public class DrivingCmd {
 	public void initData(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int trackCurveType, double[] trackAngleArray, double[] trackDistArray, double trackCurrentAngle){
 		toMiddle    		= driveArray[DrivingInterface.drvie_toMiddle    ];
 		angle        		= driveArray[DrivingInterface.drvie_angle       ];
-		speed        		= driveArray[DrivingInterface.drvie_speed       ]*3;
+		speed        		= driveArray[DrivingInterface.drvie_speed       ];
 
 		toStart				 = trackArray[DrivingInterface.track_toStart		];
 		dist_track			 = trackArray[DrivingInterface.track_dist_track		];

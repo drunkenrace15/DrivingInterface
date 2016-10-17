@@ -1,19 +1,20 @@
 
 public class DrivingController {	
-////	insert inner class here 	
-//	public class DrivingCmd{
-//		public double steer;
-//		public double accel;
-//		public double brake;
-//		public int backward;
-//	};
+//	insert inner class here 	
+	public class DrivingCmd{
+		public double steer;
+		public double accel;
+		public double brake;
+		public int backward;
+	};
 
 	public DrivingCmd controlDriving(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int trackCurveType, double[] trackAngleArray, double[] trackDistArray, double trackCurrentAngle){
 		DrivingCmd cmd = new DrivingCmd();
+		DrivingData data = new DrivingData();
 		DrivingAlgorithmLauncher dal = new DrivingAlgorithmLauncher();
 		
 		// initialize input parameters
-		cmd.initData(driveArray, aicarArray, trackArray, damageArray, rankArray, trackCurveType, trackAngleArray, trackDistArray, trackCurrentAngle);
+		data.initData(driveArray, aicarArray, trackArray, damageArray, rankArray, trackCurveType, trackAngleArray, trackDistArray, trackCurrentAngle);
 		
 		// To-Do : Make your driving algorithm	
 		/*
@@ -44,7 +45,12 @@ public class DrivingController {
 		dal.addAlgorithm(new EvasionAlgorithm());
 				
 		// set output values		
-		cmd = dal.doDrive(cmd);
+		data = dal.doDrive(data);
+		
+		cmd.steer = data.steer;
+		cmd.accel = data.accel;
+		cmd.brake = data.brake;
+		cmd.backward = data.backward;
 		
 		return cmd;
 	}

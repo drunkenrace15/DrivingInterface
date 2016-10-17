@@ -12,12 +12,12 @@ public class DrivingAlgorithmLauncher {
 		algorithms.add(algorithm);
 	}
 	
-	public DrivingCmd doDrive(DrivingCmd cmd) {
+	public DrivingData doDrive(DrivingData data) {
 		
 		for (int i = 0; i < algorithms.size(); i++) {
-			((DrivingAlgorithm)algorithms.get(i)).calculate(cmd);
+			((DrivingAlgorithm)algorithms.get(i)).calculate(data);
 		}
 		
-		return cmd;
+		return data;
 	}
 }

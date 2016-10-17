@@ -1,5 +1,5 @@
 
 public interface DrivingAlgorithm {
 
-	public DrivingCmd calculate(DrivingCmd cmd);
+	public DrivingData calculate(DrivingData data);
 }
