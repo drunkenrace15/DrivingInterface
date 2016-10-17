@@ -1,10 +1,8 @@
-import java.io.IOException;
 
 public class EvasionAlgorithm implements DrivingAlgorithm {
 
-	public DrivingData calculate(DrivingData data) {
-		// Evasion Steering
-				
+	public boolean calculate(DrivingData data) {
+		// Evasion Steering				
 		if( data.dist_cars[0] < 3 ) {
 			
 			if( data.dist_cars[1] > data.toMiddle - 2 &&
@@ -43,7 +41,7 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 			data.dest_Middle = 0;
 		}
 		
-		return data;
+		return true;
 	}
 
 }

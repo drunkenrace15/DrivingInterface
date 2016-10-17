@@ -1,12 +1,12 @@
 
 public class DefailtAlgorithm implements DrivingAlgorithm {
 
-	public DrivingData calculate(DrivingData data) {
-		
+	public boolean calculate(DrivingData data) {
+
 		data.dest_Middle = data.toMiddle;
-		data.dest_Speed  = 100;	
+		data.dest_Speed  = data.DEFAULT_SPEED;	
 		
-		return data;
+		return true;
 	}
 
 }

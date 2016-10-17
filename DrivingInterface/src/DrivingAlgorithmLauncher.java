@@ -14,8 +14,9 @@ public class DrivingAlgorithmLauncher {
 	
 	public DrivingData doDrive(DrivingData data) {
 		
-		for (int i = 0; i < algorithms.size(); i++) {
-			((DrivingAlgorithm)algorithms.get(i)).calculate(data);
+		for (int i = 0; i < algorithms.size(); i++) {			
+			if( !((DrivingAlgorithm)algorithms.get(i)).calculate(data) )
+				break;
 		}
 
 		//<-- data -> cmd  

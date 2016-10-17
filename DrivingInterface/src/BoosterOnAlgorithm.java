@@ -1,8 +1,8 @@
 
 public class BoosterOnAlgorithm implements DrivingAlgorithm {
 
-	public DrivingData calculate(DrivingData data) {
-		// Go!		
+	public boolean calculate(DrivingData data) {
+		// Go!				
 		if ( data.track_dist_straight >=50 ) {
 			data.dest_Speed = 120;
 		} else if ( data.track_dist_straight >=100 ) {
@@ -13,7 +13,7 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 			data.dest_Speed = 230;
 		}
 		
-		return data;
+		return true;
 	}
 
 }

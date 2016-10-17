@@ -1,6 +1,9 @@
 
 public class DrivingData {
 	
+	//static data
+	public static double DEFAULT_SPEED = 100.0;
+	
 	//input parameters
 	public double toMiddle;
 	public double angle;

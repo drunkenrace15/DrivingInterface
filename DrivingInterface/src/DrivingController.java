@@ -50,6 +50,7 @@ public class DrivingController {
 		 */
 		dal.addAlgorithm(new EmergencyAlgorithm());
 		
+		
 		// set output values		
 		data = dal.doDrive(data);
 			
