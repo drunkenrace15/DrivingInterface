@@ -29,11 +29,12 @@ public class DrivingData {
 	public double dest_Middle;
 	public double dest_Speed;
 	
+	//-- remove
 	public double steer;
 	public double accel;
 	public double brake;
 	public int backward;
-	
+	//-- remove
 	
 	public void initData(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int trackCurveType, double[] trackAngleArray, double[] trackDistArray, double trackCurrentAngle){
 		toMiddle    		= driveArray[DrivingInterface.drvie_toMiddle    ];

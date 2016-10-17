@@ -5,10 +5,6 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 	public DrivingData calculate(DrivingData data) {
 		// Evasion Steering
 				
-		for(int i=0;i<20; i+=2) {			
-			System.out.println(data.dist_cars[i] + "," + data.dist_cars[i+1] + "," + data.toMiddle);
-		}
-		
 		if( data.dist_cars[0] < 3 ) {
 			
 			if( data.dist_cars[1] > data.toMiddle - 2 &&
