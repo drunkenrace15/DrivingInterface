@@ -1,48 +1,27 @@
+
 public class DrivingController {	
-	public class DrivingCmd{
-		public double steer;
-		public double accel;
-		public double brake;
-		public int backward;
-	};
+////	insert inner class here 	
+//	public class DrivingCmd{
+//		public double steer;
+//		public double accel;
+//		public double brake;
+//		public int backward;
+//	};
 
 	public DrivingCmd controlDriving(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int trackCurveType, double[] trackAngleArray, double[] trackDistArray, double trackCurrentAngle){
 		DrivingCmd cmd = new DrivingCmd();
+		DrivingAlgorithmLauncher dal = new DrivingAlgorithmLauncher();
 		
-		////////////////////// input parameters
-		double toMiddle     = driveArray[DrivingInterface.drvie_toMiddle    ];
-		double angle        = driveArray[DrivingInterface.drvie_angle       ];
-		double speed        = driveArray[DrivingInterface.drvie_speed       ]*3;
-
-		double toStart				 = trackArray[DrivingInterface.track_toStart		];
-		double dist_track			 = trackArray[DrivingInterface.track_dist_track		];
-		double track_width			 = trackArray[DrivingInterface.track_width			];
-		double track_dist_straight	 = trackArray[DrivingInterface.track_dist_straight	];
-		int track_curve_type		 = trackCurveType;
-
-		double[] track_forward_angles	= trackAngleArray;
-		double[] track_forward_dists	= trackDistArray;
-		double track_current_angle		= trackCurrentAngle;
+		// initialize input parameters
+		cmd.initData(driveArray, aicarArray, trackArray, damageArray, rankArray, trackCurveType, trackAngleArray, trackDistArray, trackCurrentAngle);
 		
-		double[] dist_cars = aicarArray;
+		// To-Do : Make your driving algorithm	
+		dal.addAlgorithm(new CorneringAlgorithm());
+		dal.addAlgorithm(new DefailtAlgorithm());
+		dal.addAlgorithm(new EvasionAlgorithm());
 		
-		double damage		 = damageArray[DrivingInterface.damage];
-		double damage_max	 = damageArray[DrivingInterface.damage_max];
-
-		int total_car_num	 = rankArray[DrivingInterface.rank_total_car_num	];
-		int my_rank			 = rankArray[DrivingInterface.rank_my_rank			];
-		int opponent_rank	 = rankArray[DrivingInterface.rank_opponent_rank	];		
-		////////////////////// END input parameters
-		
-		// To-Do : Make your driving algorithm
-		
-
-		////////////////////// output values		
-		cmd.steer = (angle - toMiddle/track_width) * (1/0.541052);
-		cmd.accel = 0.2;
-		cmd.brake = 0.0;
-		cmd.backward = DrivingInterface.gear_type_forward;
-		////////////////////// END output values
+		// set output values		
+		cmd = dal.doDrive(cmd);
 		
 		return cmd;
 	}
