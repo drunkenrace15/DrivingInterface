@@ -17,7 +17,20 @@ public class DrivingAlgorithmLauncher {
 		for (int i = 0; i < algorithms.size(); i++) {
 			((DrivingAlgorithm)algorithms.get(i)).calculate(data);
 		}
+
+		//<-- data -> cmd  
+		data.steer = (data.angle + (data.dest_Middle - data.toMiddle)/data.track_width) * (1/0.541052);		
+		if (data.speed*3 < data.dest_Speed)
+		{ 
+			data.accel = data.dest_Speed/300;//data.accel;
+			data.brake = 0;
+		} else {
+			data.accel = 0;
+			data.brake = (data.speed*3)/200;
+		}
+		data.backward = DrivingInterface.gear_type_forward;
 		
 		return data;
+		//-->
 	}
 }

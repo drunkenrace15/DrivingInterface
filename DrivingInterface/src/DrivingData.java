@@ -2,30 +2,33 @@
 public class DrivingData {
 	
 	//input parameters
-	double toMiddle;
-	double angle;
-	double speed; 
+	public double toMiddle;
+	public double angle;
+	public double speed; 
 	
-	double toStart;	
-	double dist_track;
-	double track_width;
-	double track_dist_straight;
-	int track_curve_type;
+	public double toStart;	
+	public double dist_track;
+	public double track_width;
+	public double track_dist_straight;
+	public int track_curve_type;
 	
-	double[] track_forward_angles;
-	double[] track_forward_dists;
-	double track_current_angle;
+	public double[] track_forward_angles;
+	public double[] track_forward_dists;
+	public double track_current_angle;
 	
-	double[] dist_cars;
+	public double[] dist_cars;
 	
-	double damage;
-	double damage_max;
+	public double damage;
+	public double damage_max;
 	
-	int total_car_num;
-	int my_rank;
-	int opponent_rank;
+	public int total_car_num;
+	public int my_rank;
+	public int opponent_rank;
 	
 	//output parameters
+	public double dest_Middle;
+	public double dest_Speed;
+	
 	public double steer;
 	public double accel;
 	public double brake;
@@ -56,9 +59,8 @@ public class DrivingData {
 		my_rank			 	 = rankArray[DrivingInterface.rank_my_rank			];
 		opponent_rank		 = rankArray[DrivingInterface.rank_opponent_rank	];	
 		
-		steer 				 = 0.0;
-		accel 				 = 0.0;
-		brake 				 = 0.0;
+		dest_Middle			 = 0.0;
+		dest_Speed			 = 0.0;
 		backward 			 = 0;
 	}
 }

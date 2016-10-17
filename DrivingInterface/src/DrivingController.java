@@ -24,7 +24,7 @@ public class DrivingController {
 		
 		/*
 		 * 기본주행 알고리즘 
-		 * steer 	: PPT수식
+		 * steer 	: 중앙 라인
 		 * speed 	: 0.2 (100km/h) 고정
 		 * brake 	: 0 고정
 		 * backward : DrivingInterface.gear_type_forward;
@@ -46,11 +46,13 @@ public class DrivingController {
 				
 		// set output values		
 		data = dal.doDrive(data);
-		
+			
+		//-- remove(start)
 		cmd.steer = data.steer;
 		cmd.accel = data.accel;
 		cmd.brake = data.brake;
 		cmd.backward = data.backward;
+		//-- remove(end)
 		
 		return cmd;
 	}
