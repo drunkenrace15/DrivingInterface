@@ -24,34 +24,34 @@ public class DrivingController {
 		 */
 		dal.addAlgorithm(new DefailtAlgorithm());
 
-		/*
-		 * 코너링 알고리즘
-		 * dest_middle 	: 트랙분석을 통한 OUT-IN-OUT. 
-		 * dest_speed 	: ?
-		 */
-		dal.addAlgorithm(new CorneringAlgorithm());
-		
-		/*
-		 * 부스터-온 알고리즘
-		 * dest_middle 	: 변경없음. 
-		 * dest_speed 	: 연속 직진거리에 따른 최대속력 적용.
-		 */
-		dal.addAlgorithm(new BoosterOnAlgorithm());
-		
-		/*
-		 * 회피기동 알고리즘(전방 장애물 회피)
-		 * dest_middle 	: 전방 근접 차량 정보를 통한 최적의 차선 선택. 
-		 * dest_speed 	: 전방 근접 차량 정보에 따른 감속.
-		 */
-		dal.addAlgorithm(new EvasionAlgorithm());
-				
-		/*
-		 * 응급기동 알고리즘(후진 기능)
-		 * dest_middle 	: ? 
-		 * dest_speed 	: 음수 값 리턴을 통한 후진 요청.
-		 */
-		dal.addAlgorithm(new EmergencyAlgorithm());
-		
+//		/*
+//		 * 코너링 알고리즘
+//		 * dest_middle 	: 트랙분석을 통한 OUT-IN-OUT. 
+//		 * dest_speed 	: ?
+//		 */
+//		dal.addAlgorithm(new CorneringAlgorithm());
+//		
+//		/*
+//		 * 부스터-온 알고리즘
+//		 * dest_middle 	: 변경없음. 
+//		 * dest_speed 	: 연속 직진거리에 따른 최대속력 적용.
+//		 */
+//		dal.addAlgorithm(new BoosterOnAlgorithm());
+//		
+//		/*
+//		 * 회피기동 알고리즘(전방 장애물 회피)
+//		 * dest_middle 	: 전방 근접 차량 정보를 통한 최적의 차선 선택. 
+//		 * dest_speed 	: 전방 근접 차량 정보에 따른 감속.
+//		 */
+//		dal.addAlgorithm(new EvasionAlgorithm());
+//				
+//		/*
+//		 * 응급기동 알고리즘(후진 기능)
+//		 * dest_middle 	: ? 
+//		 * dest_speed 	: 음수 값 리턴을 통한 후진 요청.
+//		 */
+//		dal.addAlgorithm(new EmergencyAlgorithm());
+//		
 		
 		// set output values		
 		data = dal.doDrive(data);

@@ -73,7 +73,7 @@ public class DrivingData {
 	 * @return 트랙의 가장 우측 값
 	 */
 	public double getMostRightMiddle(){
-		return 1 - track_width/2;
+		return 1 - track_width/2; 
 	}
 	
 	/**
