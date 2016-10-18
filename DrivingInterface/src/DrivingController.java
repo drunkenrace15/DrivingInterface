@@ -1,6 +1,7 @@
 
 public class DrivingController {	
-//	insert inner class here 	
+
+	//	insert inner class here 	
 	public class DrivingCmd{
 		public double steer;
 		public double accel;
