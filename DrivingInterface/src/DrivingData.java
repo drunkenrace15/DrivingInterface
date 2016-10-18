@@ -2,7 +2,7 @@
 public class DrivingData {
 
 	//global data
-	public static double DEFAULT_SPEED = 150.0;
+	public static double DEFAULT_SPEED = 120.0;
 	public static boolean IS_EMERGENCY = false;
 	
 	//input parameters

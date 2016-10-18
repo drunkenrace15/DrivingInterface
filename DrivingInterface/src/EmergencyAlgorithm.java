@@ -4,7 +4,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 	static int cnt = 0;
 	
 	public boolean calculate(DrivingData data) {
-		
+			
 		if( data.IS_EMERGENCY) {
 			if( data.isOutOfTrack() ) {
 				data.dest_Speed = -100;
