@@ -19,17 +19,24 @@ public class DrivingAlgorithmLauncher {
 				break;
 		}
 
-		//<-- data -> cmd  
-		data.steer = (data.angle + (data.dest_Middle - data.toMiddle)/data.track_width) * (1/0.541052);		
-		if (data.speed*3 < data.dest_Speed)
+		//<-- data -> cmd
+		if( data.dest_Speed < 0 ) {
+			data.backward = DrivingInterface.gear_type_backward;			
+		}
+		else {
+			data.backward = DrivingInterface.gear_type_forward;			
+		}
+		  
+		data.steer = data.backward*data.angle + (data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052);
+		
+		if ( Math.abs(data.speed*3) <  Math.abs(data.dest_Speed) )
 		{ 
-			data.accel = data.dest_Speed/300;//data.accel;
+			data.accel = Math.abs(data.dest_Speed)/300;;
 			data.brake = 0;
 		} else {
 			data.accel = 0;
 			data.brake = (data.speed*3)/100;
 		}
-		data.backward = DrivingInterface.gear_type_forward;
 		
 		return data;
 		//-->
