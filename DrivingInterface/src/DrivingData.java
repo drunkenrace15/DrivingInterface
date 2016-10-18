@@ -69,14 +69,23 @@ public class DrivingData {
 		backward 			 = 0;
 	}
 	
+	/**
+	 * @return 트랙의 가장 우측 값
+	 */
 	public double getMostRightMiddle(){
 		return 1 - track_width/2;
 	}
 	
+	/**
+	 * @return 트랙의 가장 좌측 값
+	 */
 	public double getMostLeftMiddle(){
 		return 1 + track_width/2;
 	}
-	
+		
+	/**
+	 * @return 코스 아웃 여부
+	 */
 	public boolean isOutOfTrack(){
 		
 		if( toMiddle < getMostRightMiddle() ) 

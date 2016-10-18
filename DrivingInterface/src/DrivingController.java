@@ -17,36 +17,38 @@ public class DrivingController {
 		data.initData(driveArray, aicarArray, trackArray, damageArray, rankArray, trackCurveType, trackAngleArray, trackDistArray, trackCurrentAngle);
 		
 		// To-Do : Make your driving algorithm	
-				/*
-		 * �⺻���� �˰��� 
-		 * steer 	: ����
-		 * speed 	: 0.2 (100km/h) ����
-		 * brake 	: 0 ����
-		 * backward : DrivingInterface.gear_type_forward;
+		/*
+		 * 기본주행 알고리즘 
+		 * dest_middle  : 차선유지.
+		 * dest_speed 	: 100km/h
 		 */
 		dal.addAlgorithm(new DefailtAlgorithm());
 
 		/*
-		 * �ڳʸ� �˰��� �� 20�� Ʈ�� ����Ͽ� ����/���� �� OUT-IN-OUT �ڳʸ� ���� ���� 
+		 * 코너링 알고리즘
+		 * dest_middle 	: 트랙분석을 통한 OUT-IN-OUT. 
+		 * dest_speed 	: ?
 		 */
 		dal.addAlgorithm(new CorneringAlgorithm());
 		
 		/*
-		 * �ν��� �˰���
-		 * ���� �������� ���� �̻��� ��� �ְ�ӵ� ��� �� �������� ���� �����ΰ�� ���Ӽ���
+		 * 부스터-온 알고리즘
+		 * dest_middle 	: 변경없음. 
+		 * dest_speed 	: 연속 직진거리에 따른 최대속력 적용.
 		 */
 		dal.addAlgorithm(new BoosterOnAlgorithm());
 		
 		/*
-		 * ȸ�Ǳ⵿ �˰���(���� ��ֹ� ȸ��)
-		 * �������� ������ Ư�� ���� ���� �� ��� �������� �Ÿ��� ���Ͽ� ȸ������ �� ���� ��������
+		 * 회피기동 알고리즘(전방 장애물 회피)
+		 * dest_middle 	: 전방 근접 차량 정보를 통한 최적의 차선 선택. 
+		 * dest_speed 	: 전방 근접 차량 정보에 따른 감속.
 		 */
 		dal.addAlgorithm(new EvasionAlgorithm());
 				
 		/*
-		 * ���ޱ⵿ �˰���
-		 * ����, �ڳʾƿ����� ��Ȳ���� ���� ���ο� ���� �������� �ӵ��� �ȳ��°�� ��������
-		 * Ż���ϴ� �˰��� �ʿ�
+		 * 응급기동 알고리즘(후진 기능)
+		 * dest_middle 	: ? 
+		 * dest_speed 	: 음수 값 리턴을 통한 후진 요청.
 		 */
 		dal.addAlgorithm(new EmergencyAlgorithm());
 		
