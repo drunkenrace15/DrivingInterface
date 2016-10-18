@@ -1,5 +1,4 @@
 
-
 public class DrivingInterface {
 	public native int OpenSharedMemory();
 	public native int ReadSharedMemory(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int[] trackCurveType, double[] trackAngleArray, double[] trackDistArray, double[] trackCurrentAngle);

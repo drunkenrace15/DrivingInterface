@@ -1,4 +1,4 @@
-
+ 
 public class EvasionAlgorithm implements DrivingAlgorithm {
 
 	public boolean calculate(DrivingData data) {

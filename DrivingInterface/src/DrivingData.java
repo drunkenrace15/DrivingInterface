@@ -2,7 +2,7 @@
 public class DrivingData {
 
 	//global data
-	public static double DEFAULT_SPEED = 120.0;
+	public static double DEFAULT_SPEED = 100.0;
 	public static boolean IS_EMERGENCY = false;
 	
 	//input parameters
@@ -70,21 +70,21 @@ public class DrivingData {
 	}
 	
 	/**
-	 * @return Æ®·¢ÀÇ °¡Àå ¿ìÃø °ª
+	 * @return íŠ¸ëž™ ê°€ìž¥ ìš°ì¸¡ ìœ„ì¹˜ ê°’
 	 */
 	public double getMostRightMiddle(){
 		return 1 - track_width/2; 
 	}
 	
 	/**
-	 * @return Æ®·¢ÀÇ °¡Àå ÁÂÃø °ª
+	 * @return íŠ¸ëž™ ê°€ìž¥ ì¢Œì¸¡ ìœ„ì¹˜ ê°’
 	 */
 	public double getMostLeftMiddle(){
 		return 1 + track_width/2;
 	}
 		
 	/**
-	 * @return ÄÚ½º ¾Æ¿ô ¿©ºÎ
+	 * @return ì½”ìŠ¤ ì•„ì›ƒ ì—¬ë¶€
 	 */
 	public boolean isOutOfTrack(){
 		

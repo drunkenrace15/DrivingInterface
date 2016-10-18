@@ -1,4 +1,4 @@
-
+ 
 public class BoosterOnAlgorithm implements DrivingAlgorithm {
 
 	public boolean calculate(DrivingData data) {
