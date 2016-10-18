@@ -2,7 +2,7 @@
 public class DrivingData {
 
 	//global data
-	public static double DEFAULT_SPEED = 100.0;
+	public static double DEFAULT_SPEED = 150.0;
 	public static boolean IS_EMERGENCY = false;
 	
 	//input parameters
@@ -67,5 +67,24 @@ public class DrivingData {
 		dest_Middle			 = 0.0;
 		dest_Speed			 = 0.0;
 		backward 			 = 0;
+	}
+	
+	public double getMostRightMiddle(){
+		return 1 - track_width/2;
+	}
+	
+	public double getMostLeftMiddle(){
+		return 1 + track_width/2;
+	}
+	
+	public boolean isOutOfTrack(){
+		
+		if( toMiddle < getMostRightMiddle() ) 
+			return true;
+		
+		if( toMiddle > getMostLeftMiddle() )
+			return true;
+		
+		return false;
 	}
 }
