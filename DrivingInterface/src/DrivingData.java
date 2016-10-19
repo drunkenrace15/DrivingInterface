@@ -7,7 +7,8 @@ public class DrivingData {
 	
 	public static final int car_width  = 2;
 	public static final int car_length = 5; // (4.5 or 4.8)
-	private static final double safeGap = 0.5;
+	private static final double safeGap = 5;
+	private static final double safeExtraGap = 2;
 	
 	//input parameters
 	public double toMiddle;
@@ -105,7 +106,7 @@ public class DrivingData {
 	 * @return 현재속도를 km/h기준으로 변환한 값
 	 */
 	public double getKMhSpeed(){
-		return speed * 1.6;
+		return speed * 3.6;
 	}
 	
 	
@@ -114,10 +115,10 @@ public class DrivingData {
 	 * @return 근접 차량 여부
 	 */
 	public boolean isNearCar(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
-		return Math.abs(dist_cars[2*carIndex]) < car_length + safeGap && Math.abs(toMiddle - dist_cars[2*carIndex+1]) < car_width + safeGap;
+		return Math.abs(dist_cars[2*carIndex] - safeExtraGap) < car_length + safeGap && Math.abs(toMiddle - dist_cars[2*carIndex+1]) < car_width + safeGap;
 	}
 
 	/**
@@ -125,11 +126,11 @@ public class DrivingData {
 	 * @return 좌측 전방에 존재하는지
 	 */
 	public boolean isCarOnLeftFrontSide(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   > -1*car_length/2) 
-				&&	(dist_cars[2*carIndex+1] > toMiddle);	
+				&&	(dist_cars[2*carIndex+1] > toMiddle + car_width/2);	
 	}
 
 	/**
@@ -137,11 +138,11 @@ public class DrivingData {
 	 * @return 좌측 후방에 존재하는지
 	 */
 	public boolean isCarOnLeftRearSide(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   < car_length/2) 
-				&&	(dist_cars[2*carIndex+1] > toMiddle);	
+				&&	(dist_cars[2*carIndex+1] > toMiddle + car_width/2);	
 	}
 
 	/**
@@ -149,11 +150,11 @@ public class DrivingData {
 	 * @return 우측 전방에 존재하는지
 	 */
 	public boolean isCarOnRightFrontSide(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   > -1*car_length/2) 
-				&&	(dist_cars[2*carIndex+1] < toMiddle);	
+				&&	(dist_cars[2*carIndex+1] < toMiddle - car_width/2);	
 	}
 
 	/**
@@ -161,11 +162,11 @@ public class DrivingData {
 	 * @return 좌측 흐방에 존재하는지
 	 */
 	public boolean isCarOnRightRearSide(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   < car_length/2) 
-				&&	(dist_cars[2*carIndex+1] < toMiddle);	
+				&&	(dist_cars[2*carIndex+1] < toMiddle - car_width/2);
 	}
 
 	/**
@@ -173,7 +174,7 @@ public class DrivingData {
 	 * @return 전방에 존재하는지
 	 */
 	public boolean isCarOnTheFront(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   > 0) 
@@ -185,7 +186,7 @@ public class DrivingData {
 	 * @return 후방에 존재하는지
 	 */
 	public boolean isCarOnTheRear(int carIndex) {
-		if( carIndex < 1 || carIndex > 9 ) 
+		if( carIndex < 0 || carIndex > 9 ) 
 			return false;
 		
 		return 		(dist_cars[2*carIndex]   > 0) 
