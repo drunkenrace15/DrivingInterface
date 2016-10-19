@@ -2,8 +2,12 @@
 public class DrivingData {
 
 	//global data
-	public static double DEFAULT_SPEED = 100.0;
+	public static double DEFAULT_SPEED = 150.0;
 	public static boolean IS_EMERGENCY = false;
+	
+	public static final int car_width  = 2;
+	public static final int car_length = 5; // (4.5 or 4.8)
+	private static final double safeGap = 0.5;
 	
 	//input parameters
 	public double toMiddle;
@@ -16,8 +20,8 @@ public class DrivingData {
 	public double track_dist_straight;
 	public int track_curve_type;
 	
-	public double[] track_forward_angles;
-	public double[] track_forward_dists;
+	public double[] track_Front_angles;
+	public double[] track_Front_dists;
 	public double track_current_angle;
 	
 	public double[] dist_cars;
@@ -51,8 +55,8 @@ public class DrivingData {
 		track_dist_straight	 = trackArray[DrivingInterface.track_dist_straight	];
 		track_curve_type	 = trackCurveType;
 
-		track_forward_angles = trackAngleArray;
-		track_forward_dists	 = trackDistArray;
+		track_Front_angles = trackAngleArray;
+		track_Front_dists	 = trackDistArray;
 		track_current_angle	 = trackCurrentAngle;
 		
 		dist_cars 			 = aicarArray;
@@ -95,5 +99,96 @@ public class DrivingData {
 			return true;
 		
 		return false;
+	}
+	
+	/**
+	 * @return 현재속도를 km/h기준으로 변환한 값
+	 */
+	public double getKMhSpeed(){
+		return speed * 1.6;
+	}
+	
+	
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 근접 차량 여부
+	 */
+	public boolean isNearCar(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return Math.abs(dist_cars[2*carIndex]) < car_length + safeGap && Math.abs(toMiddle - dist_cars[2*carIndex+1]) < car_width + safeGap;
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 좌측 전방에 존재하는지
+	 */
+	public boolean isCarOnLeftFrontSide(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   > -1*car_length/2) 
+				&&	(dist_cars[2*carIndex+1] > toMiddle);	
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 좌측 후방에 존재하는지
+	 */
+	public boolean isCarOnLeftRearSide(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   < car_length/2) 
+				&&	(dist_cars[2*carIndex+1] > toMiddle);	
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 우측 전방에 존재하는지
+	 */
+	public boolean isCarOnRightFrontSide(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   > -1*car_length/2) 
+				&&	(dist_cars[2*carIndex+1] < toMiddle);	
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 좌측 흐방에 존재하는지
+	 */
+	public boolean isCarOnRightRearSide(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   < car_length/2) 
+				&&	(dist_cars[2*carIndex+1] < toMiddle);	
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 전방에 존재하는지
+	 */
+	public boolean isCarOnTheFront(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   > 0) 
+				&&	(Math.abs(toMiddle - dist_cars[2*carIndex+1]) < car_width/2);	
+	}
+
+	/**
+	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)
+	 * @return 후방에 존재하는지
+	 */
+	public boolean isCarOnTheRear(int carIndex) {
+		if( carIndex < 1 || carIndex > 9 ) 
+			return false;
+		
+		return 		(dist_cars[2*carIndex]   > 0) 
+				&&	(Math.abs(toMiddle - dist_cars[2*carIndex+1]) < car_width/2);	
 	}
 }
