@@ -21,83 +21,83 @@ public class DrivingAlgorithmLauncher {
 				break;
 		}
 
-		// Collision Check
-		boolean isToForward     = data.dest_Speed > 0;
-		boolean isToBackward    = data.dest_Speed < 0;
-		boolean isToLeft 		= (data.dest_Middle - data.toMiddle) > 0;
-		boolean isToRight		= (data.dest_Middle - data.toMiddle) < 0;
-
-		int [][] map;
-		map = new int[10][];
-		map[0] = new int[10];
-		map[1] = new int[10];
-		map[2] = new int[10];
-		map[3] = new int[10];
-		map[4] = new int[10];
-		map[5] = new int[10];
-		map[6] = new int[10];
-		map[7] = new int[10];
-		map[8] = new int[10];
-		map[9] = new int[10];
-				
-		// total cars
-		for (int i=0; i<10 ;i++ ){
-			
-//			System.out.print(i + " " + data.dist_cars[2*i] + " " + data.dist_cars[2*i+1] + " " + data.toMiddle + " ");
-			
-			if( Math.floor(data.dist_cars[2*i])/6 + 5 > 0 && Math.floor(data.dist_cars[2*i])/6 + 5 < 10)
-			{
-				if( Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5 > 0 && Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5 < 10)
-				{
-					map[(int) (Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5)][(int) (Math.floor(data.dist_cars[2*i])/6 + 5)] = 1;
-				}
-			}
-						
-			
-			if( data.isNearCar(i) ) {
-//				System.out.print("Near ");
-				if( isToForward ) {
-					if( isToLeft && data.isCarOnLeftFrontSide(i)) {
-						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.speed;
-					} else if( isToRight && data.isCarOnRightFrontSide(i) ) {
-						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.speed;						
-					} else if( data.isCarOnTheFront(i) ) {	
+//		// Collision Check
+//		boolean isToForward     = data.dest_Speed > 0;
+//		boolean isToBackward    = data.dest_Speed < 0;
+//		boolean isToLeft 		= (data.dest_Middle - data.toMiddle) > 0;
+//		boolean isToRight		= (data.dest_Middle - data.toMiddle) < 0;
+//
+//		int [][] map;
+//		map = new int[10][];
+//		map[0] = new int[10];
+//		map[1] = new int[10];
+//		map[2] = new int[10];
+//		map[3] = new int[10];
+//		map[4] = new int[10];
+//		map[5] = new int[10];
+//		map[6] = new int[10];
+//		map[7] = new int[10];
+//		map[8] = new int[10];
+//		map[9] = new int[10];
+//				
+//		// total cars
+//		for (int i=0; i<10 ;i++ ){
+//			
+////			System.out.print(i + " " + data.dist_cars[2*i] + " " + data.dist_cars[2*i+1] + " " + data.toMiddle + " ");
+//			
+//			if( Math.floor(data.dist_cars[2*i])/6 + 5 > 0 && Math.floor(data.dist_cars[2*i])/6 + 5 < 10)
+//			{
+//				if( Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5 > 0 && Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5 < 10)
+//				{
+//					map[(int) (Math.floor(data.toMiddle - data.dist_cars[2*i+1])/2 + 5)][(int) (Math.floor(data.dist_cars[2*i])/6 + 5)] = 1;
+//				}
+//			}
+//						
+//			
+//			if( data.isNearCar(i) ) {
+////				System.out.print("Near ");
+//				if( isToForward ) {
+//					if( isToLeft && data.isCarOnLeftFrontSide(i)) {
 //						data.dest_Middle = data.toMiddle;
-						data.dest_Speed  = data.getKMhSpeed();							
-					}
-				} else if ( isToBackward ) {
-					if( isToLeft && data.isCarOnLeftRearSide(i)) {
-						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.speed;
-					} else if( isToRight && data.isCarOnRightRearSide(i) ) {
-						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.speed;						
-					} else if( data.isCarOnTheRear(i) ) {	
+////						data.dest_Speed  = data.speed;
+//					} else if( isToRight && data.isCarOnRightFrontSide(i) ) {
 //						data.dest_Middle = data.toMiddle;
-						data.dest_Speed  = data.getKMhSpeed();					
-					}					
-				}
-			}	
-		}
+////						data.dest_Speed  = data.speed;						
+//					} else if( data.isCarOnTheFront(i) ) {	
+////						data.dest_Middle = data.toMiddle;
+//						data.dest_Speed  = data.getKMhSpeed();							
+//					}
+//				} else if ( isToBackward ) {
+//					if( isToLeft && data.isCarOnLeftRearSide(i)) {
+//						data.dest_Middle = data.toMiddle;
+////						data.dest_Speed  = data.speed;
+//					} else if( isToRight && data.isCarOnRightRearSide(i) ) {
+//						data.dest_Middle = data.toMiddle;
+////						data.dest_Speed  = data.speed;						
+//					} else if( data.isCarOnTheRear(i) ) {	
+////						data.dest_Middle = data.toMiddle;
+//						data.dest_Speed  = data.getKMhSpeed();					
+//					}					
+//				}
+//			}	
+//		}
+//
+//		for (int i=0; i<10 ;i++ ){
+//			
+//			for (int j=0; j<10; j++ ){
+//				if(j == 6)
+//					System.out.print(" ");
+//				
+//				if( map[j][9-i] == 1 )
+//					System.out.print("★");
+//				else
+//				    System.out.print("□");
+//				
+//			}
+//			System.out.print(" " + i + " " + data.dist_cars[2*i] + " " + data.dist_cars[2*i+1] + " " + data.toMiddle + " " + data.angle + " " + data.isNearCar(i));
+//			System.out.println();
+//		}
 
-		for (int i=0; i<10 ;i++ ){
-			
-			for (int j=0; j<10; j++ ){
-				if(j == 6)
-					System.out.print(" ");
-				
-				if( map[j][9-i] == 1 )
-					System.out.print("★");
-				else
-				    System.out.print("□");
-				
-			}
-			System.out.print(" " + i + " " + data.dist_cars[2*i] + " " + data.dist_cars[2*i+1] + " " + data.toMiddle + " " + data.angle + " " + data.isNearCar(i));
-			System.out.println();
-		}
-		
 		//<-- data -> cmd
 		// Set Geer and Steer
 		if( data.dest_Speed < 0 ) {
@@ -108,7 +108,7 @@ public class DrivingAlgorithmLauncher {
 			data.backward = DrivingInterface.gear_type_forward;
 			data.steer = data.angle + (data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052);			
 		}
-		
+
 		// Set Accel and Brake
 		if ( Math.abs(data.getKMhSpeed()) <  Math.abs(data.dest_Speed) )
 		{ 
@@ -122,8 +122,8 @@ public class DrivingAlgorithmLauncher {
 			data.brake = 0;
 		}
 
-		System.out.println(Math.abs(data.getKMhSpeed()) + " " + Math.abs(data.dest_Speed) + " " + data.accel + " " + data.brake);
-		System.out.println();
+//		System.out.println(Math.abs(data.getKMhSpeed()) + " " + Math.abs(data.dest_Speed) + " " + data.accel + " " + data.brake);
+//		System.out.println();
 //		++tic;
 //		if( tic > 50 )
 //			data.accel = 0.1;

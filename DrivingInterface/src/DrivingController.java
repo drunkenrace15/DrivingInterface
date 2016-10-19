@@ -26,18 +26,18 @@ public class DrivingController {
 		dal.addAlgorithm(new DefailtAlgorithm());
 
 		/*
-		 * 코너링 알고리즘
-		 * dest_middle 	: 트랙분석을 통한 OUT-IN-OUT. 
-		 * dest_speed 	: ?
-		 */
-		dal.addAlgorithm(new CorneringAlgorithm());
-		
-		/*
 		 * 부스터-온 알고리즘
 		 * dest_middle 	: 변경없음. 
 		 * dest_speed 	: 연속 직진거리에 따른 최대속력 적용.
 		 */
 		dal.addAlgorithm(new BoosterOnAlgorithm());
+		
+		/*
+		 * 코너링 알고리즘
+		 * dest_middle 	: 트랙분석을 통한 OUT-IN-OUT. 
+		 * dest_speed 	: ?
+		 */
+		dal.addAlgorithm(new CorneringAlgorithm());
 		
 		/*
 		 * 회피기동 알고리즘(전방 장애물 회피)

@@ -17,8 +17,8 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 			}			
 		} else if( data.dist_cars[0] < 10 ) {
 			
-			if( data.dist_cars[1] > data.toMiddle - 4 &&
-			    data.dist_cars[1] < data.toMiddle + 4)
+			if( data.dist_cars[1] > data.toMiddle - 2 &&
+			    data.dist_cars[1] < data.toMiddle + 2)
 			{
 				if( data.dist_cars[1] > data.toMiddle ) 			
 					data.dest_Middle = data.dist_cars[1] - 4;
@@ -29,8 +29,8 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 			}			
 		} else if( data.speed > 25 && data.dist_cars[0] < 40 ) {
 			
-			if( data.dist_cars[1] > data.toMiddle - 4 &&
-			    data.dist_cars[1] < data.toMiddle + 4)
+			if( data.dist_cars[1] > data.toMiddle - 2 &&
+			    data.dist_cars[1] < data.toMiddle + 2)
 			{
 				if( data.dist_cars[1] > data.toMiddle ) 			
 					data.dest_Middle = data.dist_cars[1] - 4;
