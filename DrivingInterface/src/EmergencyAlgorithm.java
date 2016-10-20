@@ -25,7 +25,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 					data.dest_Middle = data.getMostLeftMiddle();					
 				}
 			} else {
-				if( data.speed < 5 )
+				if( data.getKMhSpeed() < 30 )
 					data.IS_EMERGENCY = false;
 				else {
 					data.dest_Speed = 0;

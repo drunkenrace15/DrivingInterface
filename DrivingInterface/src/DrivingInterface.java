@@ -35,4 +35,7 @@ public class DrivingInterface {
 	// backward value
 	public static int gear_type_forward = 0;
 	public static int gear_type_backward = -1;
+	
+	public static int curve_type_right = 1;	
+	public static int curve_type_left = 2;
 }
