@@ -81,11 +81,11 @@ public class DrivingData {
 		return car_width/2 - track_width/2 + 0.5; 
 	}
 	
-	public double getRightMiddle(int m) {
+	public double getRightMiddle(double m) {
 		return Math.max(toMiddle-m, getMostRightMiddle());
 	}
 	
-	public double getRightMiddle(int m, boolean lineCheck) {
+	public double getRightMiddle(double m, boolean lineCheck) {
 		return lineCheck ? getRightMiddle(m) : toMiddle-m;
 	}
 	
@@ -96,11 +96,11 @@ public class DrivingData {
 		return track_width/2 - car_width/2 - 0.5;
 	}
 
-	public double getLeftMiddle(int m) {
+	public double getLeftMiddle(double m) {
 		return Math.min(toMiddle+m, getMostLeftMiddle());
 	}
 	
-	public double getLeftMiddle(int m, boolean lineCheck) {
+	public double getLeftMiddle(double m, boolean lineCheck) {
 		return lineCheck ? getLeftMiddle(m) : toMiddle+m;
 	}
 		
