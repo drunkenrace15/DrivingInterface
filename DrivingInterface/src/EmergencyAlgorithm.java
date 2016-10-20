@@ -1,124 +1,118 @@
-
+ 
 public class EmergencyAlgorithm implements DrivingAlgorithm {
 
 	static int cnt = 0;
+	static int block_cnt = 0;
 	
 	public boolean calculate(DrivingData data) {
-		
-		
-		//¸®Å¸ÀÌ¾î ÀÓ¹Ú ¿©ºÎ
-		boolean isWarningRetire = false;
-		
-		//Áß¾Ó¿¡¼­ ¸¹ÀÌ ÀÌÅ»ÇÑ °æ¿ì
-		boolean isOutCourse = false;  
-		
-		//ÄÚ³Ê¿¡¼­ STEER°¡ 1º¸´Ù Å«µ¥ ¼Óµµ´Â ¾È³ôÀº°æ¿ì
-		boolean isEmergency = false;
-		
-		
-//				System.out.println("toStraight : " + data.track_dist_straight);
-		System.out.println("angle : " +data.angle);
-		
-		
-		if(data.damage_max - data.damage < 10){
-			isWarningRetire = true;
-		}
-		
-		
-		// ±âº» ÄÚ½ºÀÌÅ»¿©ºÎ È®ÀÎ Áß¾Ó¿¡¼­ ¶³¾îÁü ¿©ºÎ + ¼Óµµ ¿©ºÎ + È¸Àü°¢ ¿©ºÎ
-		if(Math.abs(data.toMiddle) > 8.5 && Math.abs(data.speed) < 8.15 && Math.abs(data.angle) > 2){
-			isOutCourse = true;
-		}
-		
-		
-		// ºñ»ó or Á¤»ó ±¸ºÐÇÏ¿© Ã¼Å©¼Óµµ ºÐ±âÃ³¸® ÇÏ¿´À¸³ª ±â¾î°¡ °è¼Ó ÀüÁøÈÄÁøµÊ
-//				if(Math.abs(data.toMiddle) > 8.5 && Math.abs(data.angle) > 2){
-//					
-//					if(DrivingData.IS_EMERGENCY){
-//						if(Math.abs(data.speed) < 20.00){
-//							isOutCourse = true;
-//						}
-//					}else{
-//						if(Math.abs(data.speed) < 8.15){
-//							isOutCourse = true;
-//						}
-//					}
-//				}
-		
-		//ÈÄÁøÇÒ¶§ ¼Óµµ ¸¶ÀÌ³Ê½º ¾Æ·¡´Â ÈÄÁøÇØ¼­ °è¼Ó °¥¶§ °ª
-		//steer : 5.838021438190756
-		//speed : -7.041156768798828
-		
-		//steer : 5.794016712426436
-		//speed : 0.08803201466798782
-		
-		
-		// È¸Àü°¢Àº Å«µ¥ + ÀüÁø ½ºÇÇµå°¡ ¸Å¿ì ÀÛÀ»°æ¿ì
-		// ºñ»ó »óÈ²À¸·Î ¼ÂÆÃ
-		if(data.angle < 5 && data.angle > 1 && data.speed < 0.15 && data.speed > 0.0){
-			isEmergency = true;
-		}
-		
-		
-		if(isEmergency){
-			System.out.println("emergency!!");
-			data.dest_Speed = -100.0;
-			System.out.println("angle : " +data.angle);
-			System.out.println("speed : " + data.speed);
-//					data.steer = data.steer * -20;
-		}else if(isOutCourse){
 			
-			//course out!!
-//					middle : 9.00872802734375
-//					speed : -4.814175605773926
+		if( data.IS_EMERGENCY) {
+			if( data.isOutOfTrack() ) {
+								
+				if( data.toMiddle < 0 ) {
+
+					if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
+						data.dest_Speed = -50;
+					else
+						data.dest_Speed = 50;	
+					data.dest_Middle = data.getMostRightMiddle();
+				}
+				else{
+
+					if( data.angle > Math.PI*-3/4 && data.angle < Math.PI*-1/4 )
+						data.dest_Speed = -50;
+					else
+						data.dest_Speed = 50;	
+					data.dest_Middle = data.getMostLeftMiddle();
+				}
+			} else {
+				
+				if(data.getKMhSpeed() < 10){
+					blockEscape(data);
+				}else{
+					
+					if( data.getKMhSpeed() < 30 )
+						data.IS_EMERGENCY = false;
+					else {
+						data.dest_Speed = 0;
+						if( data.toMiddle < 0 ) 
+							data.dest_Middle = data.getMostRightMiddle();
+						else
+							data.dest_Middle = data.getMostLeftMiddle();
+					}
+					
+				}
+					
+			}
 			
-			System.out.println("course out!!");
-			System.out.println("middle : " + data.toMiddle);
-			data.dest_Speed = -100.0;
-			System.out.println("speed : " + data.speed);
-//					data.angle = data.angle*10;
+//			System.out.println("1ë²ˆ");
+		} else {		
+			if( data.isOutOfTrack() ) {
+				++cnt;
+				
+				if( cnt > 5 ) {
+					if( data.toMiddle < 0 ) {
+
+						if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
+							data.dest_Speed = -50;
+						else
+							data.dest_Speed = 50;	
+						data.dest_Middle = data.getMostRightMiddle();
+					}
+					else{
+
+						if( data.angle > Math.PI*-3/4 && data.angle < Math.PI*-1/4 )
+							data.dest_Speed = -50;
+						else
+							data.dest_Speed = 50;	
+						data.dest_Middle = data.getMostLeftMiddle();
+					}
+					
+					//
+					data.IS_EMERGENCY = true;
+					
+				}
+				
+			} else if(data.getKMhSpeed() < 10){
+				
+				blockEscape(data);
+				
+			}else{
+				
+				cnt = 0;
+//				System.out.println("2ë²ˆ");
+			}
+//			System.out.println("3ë²ˆ");
+		}
+		
+		if(data.getKMhSpeed() < 10){
+			blockEscape(data);
+		}
+		
+		return ! data.IS_EMERGENCY;
+//		return true;
+	}
+	
+	
+	void blockEscape(DrivingData data){
+		
+		System.out.println("block!!! : " + block_cnt);
+		
+		if(block_cnt > 15){
+			
+			data.dest_Speed = -300;
+			if( data.toMiddle < 0 ) 
+				data.dest_Middle = data.getMostRightMiddle();
+			else
+				data.dest_Middle = data.getMostLeftMiddle();
+			
+			data.IS_EMERGENCY = true;
+			block_cnt = 0;
 			
 		}else{
-			data.backward = DrivingInterface.gear_type_forward;
+			++block_cnt;
 		}
 		
-		return true;
-		
-//		if( data.IS_EMERGENCY) {
-//			if( data.isOutOfTrack() ) {
-//				data.dest_Speed = -100;
-//				if( data.toMiddle < 0 ) 
-//					data.dest_Middle = data.getMostRightMiddle();
-//				else
-//					data.dest_Middle = data.getMostLeftMiddle();					
-//			} else {
-//				if( data.speed < 5 )
-//					data.IS_EMERGENCY = false;
-//				else {
-//					data.dest_Speed = 0;
-//					if( data.toMiddle < 0 ) 
-//						data.dest_Middle = data.getMostRightMiddle();
-//					else
-//						data.dest_Middle = data.getMostLeftMiddle();
-//				}
-//					
-//			}
-//		} else {		
-//			if( data.isOutOfTrack() ) {
-//				++cnt;
-//				
-//				if( cnt > 5 ) {
-//					data.dest_Speed = -100;
-//					if( data.toMiddle < 0 ) 
-//						data.dest_Middle = data.getMostRightMiddle();
-//					else
-//						data.dest_Middle = data.getMostLeftMiddle();
-//					data.IS_EMERGENCY = true;
-//				}
-//			} else 				
-//				cnt = 0;
-//		}
-//		return ! data.IS_EMERGENCY;
 	}
-
+	
 }
