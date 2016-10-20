@@ -78,14 +78,30 @@ public class DrivingData {
 	 * @return 트랙 가장 우측 위치 값
 	 */
 	public double getMostRightMiddle(){
-		return car_width/2 - track_width/2; 
+		return car_width/2 - track_width/2 + 0.5; 
+	}
+	
+	public double getRightMiddle(int m) {
+		return Math.max(toMiddle-m, getMostRightMiddle());
+	}
+	
+	public double getRightMiddle(int m, boolean lineCheck) {
+		return lineCheck ? getRightMiddle(m) : toMiddle-m;
 	}
 	
 	/**
 	 * @return 트랙 가장 좌측 위치 값
 	 */
 	public double getMostLeftMiddle(){
-		return track_width/2 - car_width/2;
+		return track_width/2 - car_width/2 - 0.5;
+	}
+
+	public double getLeftMiddle(int m) {
+		return Math.min(toMiddle+m, getMostLeftMiddle());
+	}
+	
+	public double getLeftMiddle(int m, boolean lineCheck) {
+		return lineCheck ? getLeftMiddle(m) : toMiddle+m;
 	}
 		
 	/**
@@ -109,6 +125,11 @@ public class DrivingData {
 		return speed * 3.6;
 	}
 	
+	
+	
+	
+	
+//--- 미사용 매소드	
 	
 	/**
 	 * @param carIndex 차량 번호 전방(1~5) 후방(6~9)

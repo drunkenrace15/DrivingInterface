@@ -82,9 +82,8 @@ public class DrivingAlgorithmLauncher {
 			data.accel = 0;
 			data.brake = 0;
 		}
-		System.out.println(data.toMiddle + ", " + data.dest_Middle + ", " + data.steer);
-		System.out.println(data.getKMhSpeed() + "(" + data.speed + "), " + data.dest_Speed + ", " + data.accel + ", " + data.brake + ", ");
-		System.out.println();
+//		System.out.println(data.toMiddle + ", " + data.dest_Middle + ", " + data.steer);
+//		System.out.println(data.getKMhSpeed() + "(" + data.speed + "), " + data.dest_Speed + ", " + data.accel + ", " + data.brake + ", ");		
 		
 		return data;
 		//-->
@@ -92,6 +91,11 @@ public class DrivingAlgorithmLauncher {
 	
 	public void printCourseRader(DrivingData data){
 //		System.out.println();
+		System.out.println(data.track_current_angle);
+		for(int i=0 ;i<20 ;i++ ){
+			System.out.println(", " + data.track_Front_angles[i] + ", " + data.track_Front_dists[i]);
+		}
+		System.out.println();
 	}
 	
 	public void printMapRader(DrivingData data){
