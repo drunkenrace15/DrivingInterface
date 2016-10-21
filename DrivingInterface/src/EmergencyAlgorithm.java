@@ -2,6 +2,7 @@
 public class EmergencyAlgorithm implements DrivingAlgorithm {
 
 	static int cnt = 0;
+	static int block_cnt = 0;
 	
 	public boolean calculate(DrivingData data) {
 			
@@ -22,37 +23,96 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 						data.dest_Speed = -50;
 					else
 						data.dest_Speed = 50;	
-					data.dest_Middle = data.getMostLeftMiddle();					
+					data.dest_Middle = data.getMostLeftMiddle();
 				}
 			} else {
-				if( data.getKMhSpeed() < 30 )
-					data.IS_EMERGENCY = false;
-				else {
-					data.dest_Speed = 0;
-					if( data.toMiddle < 0 ) 
-						data.dest_Middle = data.getMostRightMiddle();
-					else
-						data.dest_Middle = data.getMostLeftMiddle();
+				
+				if(data.getKMhSpeed() < 10){
+					blockEscape(data);
+				}else{
+					
+					if( data.getKMhSpeed() < 30 )
+						data.IS_EMERGENCY = false;
+					else {
+						data.dest_Speed = 0;
+						if( data.toMiddle < 0 ) 
+							data.dest_Middle = data.getMostRightMiddle();
+						else
+							data.dest_Middle = data.getMostLeftMiddle();
+					}
+					
 				}
 					
 			}
+			
+//			System.out.println("1번");
 		} else {		
 			if( data.isOutOfTrack() ) {
 				++cnt;
 				
 				if( cnt > 5 ) {
-					data.dest_Speed = -100;
-					if( data.toMiddle < 0 ) 
+					if( data.toMiddle < 0 ) {
+
+						if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
+							data.dest_Speed = -50;
+						else
+							data.dest_Speed = 50;	
 						data.dest_Middle = data.getMostRightMiddle();
-					else
+					}
+					else{
+
+						if( data.angle > Math.PI*-3/4 && data.angle < Math.PI*-1/4 )
+							data.dest_Speed = -50;
+						else
+							data.dest_Speed = 50;	
 						data.dest_Middle = data.getMostLeftMiddle();
+					}
+					
+					//
 					data.IS_EMERGENCY = true;
+					
 				}
-			} else 				
+				
+			} else if(data.getKMhSpeed() < 10){
+				
+				blockEscape(data);
+				
+			}else{
+				
 				cnt = 0;
+//				System.out.println("2번");
+			}
+//			System.out.println("3번");
 		}
+		
+		if(data.getKMhSpeed() < 10){
+			blockEscape(data);
+		}
+		
 		return ! data.IS_EMERGENCY;
 //		return true;
+	}
+	
+	
+	void blockEscape(DrivingData data){
+		
+//		System.out.println("block!!! : " + block_cnt);
+		
+		if(block_cnt > 15){
+			
+			data.dest_Speed = -300;
+			if( data.toMiddle < 0 ) 
+				data.dest_Middle = data.getMostRightMiddle();
+			else
+				data.dest_Middle = data.getMostLeftMiddle();
+			
+			data.IS_EMERGENCY = true;
+			block_cnt = 0;
+			
+		}else{
+			++block_cnt;
+		}
+		
 	}
 
 }

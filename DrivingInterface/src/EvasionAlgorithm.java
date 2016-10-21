@@ -1,21 +1,28 @@
  
 public class EvasionAlgorithm implements DrivingAlgorithm {
 
+	
 	public boolean calculate(DrivingData data) {
 		// Evasion Steering	
 		
-		//////System.out.printlnln("Track width = " + data.track_width);
-		double currentSpeed = data.speed * 3.6;
-		//////System.out.printlnln("Speed = " + currentSpeed);
+		////////System.out.printlnln("Track width = " + data.track_width);
+		double currentSpeed = data.getKMhSpeed();
+		////////System.out.printlnln("Speed = " + currentSpeed);
+		double sight = 0;
 		double angle = 0;
-		if(currentSpeed > 140){
-			angle = 2;
-		} else if(currentSpeed > 120){
-			angle = 3;
+		
+		if(currentSpeed > 200){
+			angle = data.track_width/5 * 0.6;
+			sight = 100;
+		} else if(currentSpeed > 140){
+			angle = data.track_width/5 * 0.7 ;
+			sight = 90;
 		} else if(currentSpeed > 70){
-			angle = 3.5;
+			sight = 80;
+			angle = data.track_width/5 * 0.8;
 		} else {
-			angle = 4;
+			sight = 70;
+			angle = data.track_width/5 * 0.9;
 		}
 		
 		double minMiddle =9;
@@ -32,7 +39,7 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 			 double secondMiddle = data.dist_cars[i+3];
 			 
 			 
-			if(secondDist - firstDist <= 7){
+			if(secondDist - firstDist <= 12){
 				
 				
 				if(minMiddle > ((firstMiddle<secondMiddle)?firstMiddle:secondMiddle)){
@@ -59,10 +66,10 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 		//if(between == 0) between = 1;
 		
 		for(int i=0;i<data.dist_cars.length/2-1;i+=2){
-			if( data.dist_cars[i] <= 60 ) {
+			if( data.dist_cars[i] < sight ) {
 				
-				if( data.dist_cars[i+1] > data.toMiddle - 2.2 &&
-				    data.dist_cars[i+1] < data.toMiddle + 2.2){
+				if( data.dist_cars[i+1] > data.toMiddle - 2 &&
+				    data.dist_cars[i+1] < data.toMiddle + 2){
 					chkInFront = true;
 					break;
 				}		
@@ -75,7 +82,7 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 				if( data.dist_cars[i+1] > data.toMiddle - 2 &&
 				    data.dist_cars[i+1] < data.toMiddle + 2){
 					 chkInBack= true;
-					 ////System.out.printlnln("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
+					 //////System.out.printlnln("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
 						
 					break;
 				}		
@@ -84,41 +91,58 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 		*/
 		
 		
-		double rightGab = data.track_width/2 - maxMiddle; // 대부분양수
-		double leftGab = data.track_width/2 + minMiddle; // 대부분 음수
+		//double rightGab = data.track_width/2 - Math.abs(maxMiddle);
+		  double rightGab = Math.abs(-1 * data.track_width - (minMiddle) + (data.track_width/2));
+		//double leftGab = data.track_width/2 - Math.abs(minMiddle);
+		  double leftGab = Math.abs(data.track_width - (maxMiddle) - (data.track_width/2));
 		
-		
-		
+		  
 		
 		
 		if(chkInFront){
-					
-			if(leftGab>rightGab) {  //왼쪽이 더 공간이 클경우
-				//System.out.println("Left Zone check");
-				if( minMiddle-data.toMiddle	> maxMiddle-data.toMiddle)
+			//System.out.println("leftgab = " + leftGab +" rightgab = " + rightGab);		
+			double minMiddleDist = data.track_width - (minMiddle) - (data.track_width/2);
+			double maxMiddleDist = data.track_width - (maxMiddle) - (data.track_width/2);
+			double toMiddleDist = data.track_width - (data.toMiddle) - (data.track_width/2);
+			if(leftGab>rightGab) {  
+				//System.out.print("Left Zone check");
+				//System.out.print(" speed = " + currentSpeed);
+							
+				if( minMiddleDist-toMiddleDist	> maxMiddleDist-toMiddleDist)
 				{	
-						data.dest_Middle = data.toMiddle + angle; //왼쪽으로
-						if(data.dest_Middle < maxMiddle) data.dest_Middle = maxMiddle + angle;
-						////System.out.printlnln(" and go left.");
+					data.dest_Middle = data.toMiddle - angle; 	
+					if(data.dest_Middle > minMiddle) data.dest_Middle = minMiddle - 1.5;
+					if(data.dest_Middle < data.getMostRightMiddle()) data.dest_Middle = data.getMostRightMiddle();
+					//System.out.println(" but go right.");
 				} else {
-						data.dest_Middle = data.toMiddle - angle; //오른쪽으로	
-						if(data.dest_Middle > minMiddle) data.dest_Middle = minMiddle - angle;
-						////System.out.printlnln(" but go right.");
+						
+						
+						data.dest_Middle = data.toMiddle + angle; 
+						if(data.dest_Middle < maxMiddle) data.dest_Middle = maxMiddle + 1.5;
+						if(data.dest_Middle > data.getMostLeftMiddle()) data.dest_Middle = data.getMostLeftMiddle();
+						
+						//System.out.println(" and go left.");
+						
 				}
 				
 				
 				
 			} else {
-				//System.out.println("Right Zone check");
-				if( minMiddle-data.toMiddle	> maxMiddle-data.toMiddle)
+				//System.out.print("Right Zone check");
+				//System.out.print(" speed = " + currentSpeed);
+				if( minMiddleDist-toMiddleDist	>= maxMiddleDist-toMiddleDist)
 					{	
-						data.dest_Middle = data.toMiddle  + angle;
-						if(data.dest_Middle < maxMiddle) data.dest_Middle = maxMiddle + angle;
-						////System.out.printlnln(" but go left.");
+					data.dest_Middle = data.toMiddle  - angle;
+					if(data.dest_Middle > minMiddle) data.dest_Middle = minMiddle - 1.5;
+					if(data.dest_Middle < data.getMostRightMiddle()) data.dest_Middle = data.getMostRightMiddle();
+					//System.out.println(" and go right.");
 					} else {
-						data.dest_Middle = data.toMiddle  - angle;
-						if(data.dest_Middle > minMiddle) data.dest_Middle = minMiddle - angle;
-						////System.out.printlnln(" and go right.");
+						
+						
+						data.dest_Middle = data.toMiddle  + angle;
+						if(data.dest_Middle < maxMiddle) data.dest_Middle = maxMiddle + 1.5;
+						if(data.dest_Middle > data.getMostLeftMiddle()) data.dest_Middle = data.getMostLeftMiddle();
+						//System.out.println(" but go left.");
 					}
 				
 				
@@ -127,18 +151,23 @@ public class EvasionAlgorithm implements DrivingAlgorithm {
 			
 			
 			//if( data.dist_cars[0] < 5 && currentSpeed >=50 ) {data.dest_Speed = 20;}
-			if( data.dist_cars[0] < 50 && data.dest_Speed > 100) {data.dest_Speed = 80;}
+			//if( data.dist_cars[0] < 30 && data.dest_Speed > 80) {data.dest_Speed =100;}
 			
-			//System.out.println("minMiddle = " + minMiddle + " maxMiddle = " + maxMiddle);   
-			////System.out.printlnln(" "+chkInFront+" toMiddle = " + data.toMiddle +" Dest_Middle = " + data.dest_Middle);
+			//System.out.print("minMiddle = " + minMiddle + " maxMiddle = " + maxMiddle);   
+			//System.out.println(" "+chkInFront+" toMiddle = " + data.toMiddle +" Dest_Middle = " + data.dest_Middle);
 			
 			for(int i=0;i<data.dist_cars.length/2-1;i+=2){
 				if(data.dist_cars[i] <100){
-				////System.out.printlnln("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
+				//System.out.println("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
 				}
 			}			
-		} 
-		
+		} 		
+				
+		return true;
+	}
+	
+	public boolean calculate_sun(DrivingData data) {
+		// Evasion Steering
 		
 //		if( data.dist_cars[0] < 3 ) {
 //			

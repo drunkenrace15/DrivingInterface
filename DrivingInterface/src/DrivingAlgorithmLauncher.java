@@ -20,43 +20,8 @@ public class DrivingAlgorithmLauncher {
 			if( !((DrivingAlgorithm)algorithms.get(i)).calculate(data) )
 				break;
 		}
-
-//		// Collision Check
-//		boolean isToForward     = data.dest_Speed > 0;
-//		boolean isToBackward    = data.dest_Speed < 0;
-//		boolean isToLeft 		= (data.dest_Middle - data.toMiddle) > 0;
-//		boolean isToRight		= (data.dest_Middle - data.toMiddle) < 0;
-//
-//		// total cars
-//		for (int i=0; i<10 ;i++ ){
-//			if( data.isNearCar(i) ) {
-//				if( isToForward ) {
-//					if( isToLeft && data.isCarOnLeftFrontSide(i)) {
-//						data.dest_Middle = data.toMiddle;
-////						data.dest_Speed  = data.speed;
-//					} else if( isToRight && data.isCarOnRightFrontSide(i) ) {
-//						data.dest_Middle = data.toMiddle;
-////						data.dest_Speed  = data.speed;						
-//					} else if( data.isCarOnTheFront(i) ) {	
-////						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.getKMhSpeed();							
-//					}
-//				} else if ( isToBackward ) {
-//					if( isToLeft && data.isCarOnLeftRearSide(i)) {
-//						data.dest_Middle = data.toMiddle;
-////						data.dest_Speed  = data.speed;
-//					} else if( isToRight && data.isCarOnRightRearSide(i) ) {
-//						data.dest_Middle = data.toMiddle;
-////						data.dest_Speed  = data.speed;						
-//					} else if( data.isCarOnTheRear(i) ) {	
-////						data.dest_Middle = data.toMiddle;
-//						data.dest_Speed  = data.getKMhSpeed();					
-//					}					
-//				}
-//			}	
-//		}
 		
-		printCourseRader(data);
+//		printCourseRader(data);
 //		printMapRader(data);
 				
 		//<-- data -> cmd
@@ -82,11 +47,16 @@ public class DrivingAlgorithmLauncher {
 			data.accel = 0;
 			data.brake = 0;
 		}
-//		System.out.println(data.toMiddle + ", " + data.dest_Middle + ", " + data.steer);
-//		System.out.println(data.getKMhSpeed() + "(" + data.speed + "), " + data.dest_Speed + ", " + data.accel + ", " + data.brake + ", ");		
-		
+//		printCmd(data);
 		return data;
 		//-->
+	}
+	
+	public void printCmd(DrivingData data){
+
+		System.out.println(data.toMiddle + ", " + data.dest_Middle + ", " + data.steer);
+		System.out.println(data.getKMhSpeed() + "(" + data.speed + "), " + data.dest_Speed + ", " + data.accel + ", " + data.brake + ", ");	
+		
 	}
 	
 	public void printCourseRader(DrivingData data){
