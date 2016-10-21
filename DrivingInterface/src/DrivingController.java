@@ -1,4 +1,7 @@
+ 
 public class DrivingController {	
+
+	//	insert inner class here 	
 	public class DrivingCmd{
 		public double steer;
 		public double accel;
@@ -8,174 +11,61 @@ public class DrivingController {
 
 	public DrivingCmd controlDriving(double[] driveArray, double[] aicarArray, double[] trackArray, double[] damageArray, int[] rankArray, int trackCurveType, double[] trackAngleArray, double[] trackDistArray, double trackCurrentAngle){
 		DrivingCmd cmd = new DrivingCmd();
+		DrivingData data = new DrivingData();
+		DrivingAlgorithmLauncher dal = new DrivingAlgorithmLauncher();
 		
-		////////////////////// input parameters
-		double toMiddle     = driveArray[DrivingInterface.drvie_toMiddle    ];
-		double angle        = driveArray[DrivingInterface.drvie_angle       ];
-		double speed        = driveArray[DrivingInterface.drvie_speed       ]*3;
+		// initialize input parameters
+		data.initData(driveArray, aicarArray, trackArray, damageArray, rankArray, trackCurveType, trackAngleArray, trackDistArray, trackCurrentAngle);
+		
+		// To-Do : Make your driving algorithm	
+		/*
+		 * æ¹²ê³•ë‚¯äºŒì‡³ë»¾ ï¿½ë¸£æ€¨ì¢Šâ”ï§ï¿½ 
+		 * dest_middle  : ï§¡â‘¥ê½‘ï¿½ì‘€ï§ï¿½.
+		 * dest_speed 	: 100km/h
+		 */
+		dal.addAlgorithm(new DefailtAlgorithm());
 
-		double toStart				 = trackArray[DrivingInterface.track_toStart		];
-		double dist_track			 = trackArray[DrivingInterface.track_dist_track		];
-		double track_width			 = trackArray[DrivingInterface.track_width			];
-		double track_dist_straight	 = trackArray[DrivingInterface.track_dist_straight	];
-		int track_curve_type		 = trackCurveType;
-
-		double[] track_forward_angles	= trackAngleArray;
-		double[] track_forward_dists	= trackDistArray;
-		double track_current_angle		= trackCurrentAngle;
+		/*
+		 * éºï¿½ï¿½ë’ªï¿½ê½£-ï¿½ì‚© ï¿½ë¸£æ€¨ì¢Šâ”ï§ï¿½
+		 * dest_middle 	: è¹‚ï¿½å¯ƒìŒë¾¾ï¿½ì“¬. 
+		 * dest_speed 	: ï¿½ë¿°ï¿½ëƒ½ ï§ê³¸ì­Šå«„ê³•â”ï¿½ë¿‰ ï¿½ëµ²ç‘œï¿½ ï§¤ì’•ï¿½ï¿½ëƒ½ï¿½ì ° ï¿½ìŸ»ï¿½ìŠœ.
+		 */
+		dal.addAlgorithm(new BoosterOnAlgorithm());
 		
-		double[] dist_cars = aicarArray;
+		/*
+		 * è‚„ë¶¾ê¼«ï§ï¿½ ï¿½ë¸£æ€¨ì¢Šâ”ï§ï¿½
+		 * dest_middle 	: ï¿½ë“ƒï¿½ì˜“éºê¾©ê½ï¿½ì“£ ï¿½ë„»ï¿½ë¸³ OUT-IN-OUT. 
+		 * dest_speed 	: ?
+		 */
+		dal.addAlgorithm(new CorneringAlgorithm());
 		
-		double damage		 = damageArray[DrivingInterface.damage];
-		double damage_max	 = damageArray[DrivingInterface.damage_max];
-
-		int total_car_num	 = rankArray[DrivingInterface.rank_total_car_num	];
-		int my_rank			 = rankArray[DrivingInterface.rank_my_rank			];
-		int opponent_rank	 = rankArray[DrivingInterface.rank_opponent_rank	];		
-		////////////////////// END input parameters
+		/*
+		 * ï¿½ì‰¶ï¿½ëµ¾æ¹²ê³•ë£ ï¿½ë¸£æ€¨ì¢Šâ”ï§ï¿½(ï¿½ìŸ¾è«›ï¿½ ï¿½ì˜£ï¿½ë¸·è‡¾ï¿½ ï¿½ì‰¶ï¿½ëµ¾)
+		 * dest_middle 	: ï¿½ìŸ¾è«›ï¿½ æ´¹ì‡±ì ’ ï§¡â‘¤ì›¾ ï¿½ì ™è¹‚ëŒ€ï¿½ï¿½ ï¿½ë„»ï¿½ë¸³ ï§¤ì’–ìŸ»ï¿½ì“½ ï§¡â‘¥ê½‘ ï¿½ê½‘ï¿½ê¹®. 
+		 * dest_speed 	: ï¿½ìŸ¾è«›ï¿½ æ´¹ì‡±ì ’ ï§¡â‘¤ì›¾ ï¿½ì ™è¹‚ëŒë¿‰ ï¿½ëµ²ç‘œï¿½ åª›ë¨¯ëƒ½.
+		 */
+//		dal.addAlgorithm(new EvasionAlgorithm());
+				
+		/*
+		 * ï¿½ì“³æ¹²ë¯ë¦°ï¿½ë£ ï¿½ë¸£æ€¨ì¢Šâ”ï§ï¿½(ï¿½ì‘ï§ï¿½ æ¹²ê³•ë’«)
+		 * dest_middle 	: ? 
+		 * dest_speed 	: ï¿½ì“¬ï¿½ë‹” åª›ï¿½ ç”±Ñ‹ê½©ï¿½ì“£ ï¿½ë„»ï¿½ë¸³ ï¿½ì‘ï§ï¿½ ï¿½ìŠ‚ï§£ï¿½.
+		 */
+		dal.addAlgorithm(new EmergencyAlgorithm());
 		
-		// To-Do : Make your driving algorithm
-		
-
-		double plusDegree=0;
-		double plusAcc=0;
-		double plusBrake=0;
-		double coe_steer = 0;
-		int frontCar = getIndexNearFrontCar(toMiddle,dist_cars); //¾ÕÂ÷ÀÇ index¸¦ ¹Ş¾Æ¿È
-		
-		if(frontCar>=0){
-			plusDegree = getDegreeNearFrontCar(toMiddle,frontCar,frontCar+1);
-			if(plusDegree * 180/Math.PI >= 60) {
-				System.out.println("PlusDegree over 60"+" " + plusDegree * 180/Math.PI);
-				plusDegree = 0;
-			}
-		}
-		//index°¡ 0ÀÌ»óÀÌ¸é 50mÀÌ³»ÀÇ ¾ÕÂ÷°¡ ÀÖ´Ù´Â ÀÇ¹Ì 60µµ ÀÌ»óÀÏ¶© ÇÚµéÀ» ²ªÁö¾ÊÀ½
-		System.out.println("PlusDegree "+plusDegree * 180/Math.PI);
-//		System.out.println("toMiddle/track_width "+toMiddle/track_width);
-//		System.out.println("c "+(1+coe_steer)/0.541052);
-		
-		
-		if(plusDegree >0) { 
-			angle -= (plusDegree)/2;
-		}
-		//¿ŞÂÊÀ¸·Î ÇÇÇÒ°ÍÀÎ°¡ ¿À¸¥ÂÊÀ¸·Î ÇÇÇÒ°ÍÀÎ°¡
-		else if(plusDegree <0) {
-			angle +=  (plusDegree)/2;
-		} else {
-			// 60µµÀÌ»ó ¹ú¾îÁ®ÀÖÀ¸¸é ÇÇÇÒÇÊ¿ä°¡ ¾ø´Ù°í ÆÇ´Ü, °¡¼Óµµ Áõ°¡
-			if(toDegree(angle)<=40 && track_dist_straight >=30){
-				plusAcc += 0.2;
-			}			
-		}
-		
-		//Á÷Áø Æ®·¢ °Å¸®¸¦ ÀÌ¿ëÇÏ¿ä Ãß°¡ °¡¼Óµµ ºÎ¿©
-		
-		System.out.println("track_dist_straight "+track_dist_straight+ "m");
-		if(track_dist_straight >=100){
-			plusAcc +=0.3;
-		}else if(track_dist_straight >=150){
-			plusAcc +=0.4;
-		}
-		System.out.println("Æ®·¢ ºñ±³ "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
-//		System.out.println("Æ®·¢ ºñ±³ "+(track_current_angle - track_forward_angles[0]));
-
-		if((track_dist_straight >=0) && (track_dist_straight <=40)){
-			if(track_curve_type ==1){//¿ìÈ¸Àü ÄÚ½º
-				angle +=  (track_forward_angles[1] - track_forward_angles[0]); //ÀÏ´Ü Áö±İÀº 0À¸·Î ÀÇ¹Ì°¡ ¾øÀ½
-//				coe_steer =  4*(track_current_angle - track_forward_angles[0]);
-				if(plusAcc >=0.3){
-					plusAcc -= 0.3;
-				}
-				if(plusBrake >= 1){
-					plusBrake +=0.05;
-				}
-				System.out.println("¿ìÈ¸Àü angle "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
-			}else if(track_curve_type == 2){//ÁÂÈ¸Àü ÄÚ½º
-				angle -=  (track_forward_angles[1] - track_forward_angles[0]);
-//				coe_steer =  -4*(track_current_angle - track_forward_angles[0]);
-				if(plusAcc >=0.3){
-					plusAcc -= 0.3;
-				}
-				if(plusBrake >= 1){
-					plusBrake +=0.05;
-				}
-				System.out.println("ÁÂÈ¸Àü angle "+(track_current_angle - track_forward_angles[0]) * 180/Math.PI);
-			}			
-		}else{
-			plusBrake = 0;
-		}
-		
-//		if((track_current_angle - track_forward_angles[0])*(180/Math.PI)>=4.5){
-//			plusBrake = 0.05;
-//			angle +=  (track_current_angle - track_forward_angles[0])/2;
-//			System.out.println("¿ìÃøÀ¸·Î ±Ş Ä¿ºê angle  "+coe_steer * 180/Math.PI);
-//		}else if((track_current_angle - track_forward_angles[0])*(180/Math.PI)<= -4.5){
-//			plusBrake = 0.05;
-//			angle -=  (track_current_angle - track_forward_angles[0])/2;
-//			System.out.println("ÁÂÈ¸ÀüÀ¸·Î ±Ş Ä¿ºê angle  "+coe_steer * 180/Math.PI);
-//		}
-		
-
-//		System.out.println("angle "+angle*(180/Math.PI));
-//		int front_curve = getTypeFrontCurve(); 
-		
-		////////////////////// output values		
-//		cmd.steer = 3.5*angle+(-1*toMiddle/100);
-		cmd.steer = (angle - toMiddle/track_width) *((1+coe_steer)/0.541052);
-		cmd.accel = 0.2+plusAcc;
-		cmd.brake = 0.0+plusBrake;
-		cmd.backward = DrivingInterface.gear_type_forward;
-		////////////////////// END output values
-		
-		
+		// set output values		
+		data = dal.doDrive(data);
+			
+		//-- remove(start)
+		cmd.steer = data.steer;
+		cmd.accel = data.accel;
+		cmd.brake = data.brake;
+		cmd.backward = data.backward;
+		//-- remove(end)
+				
 		return cmd;
 	}
 	
-	public static int getTypeFrontCurve() {
-		
-		return 0;
-	}
-
-	//Á¦ÀÏ °¡±îÀÌ ºÙ¾îÀÖ´Â Â÷ÀÇ index
-	
-	public static int getIndexNearFrontCar(double myMiddle,double cars[]){
-		int c=-1;
-		
-		double minDist = 50; 
-		double minMiddle = 1;
-		//¹üÀ§ ÁöÁ¤À» À§ÇÔ °Ë»öÀº 1m ~ 50m
-		
-		for(int i =0;i<cars.length;i+=2){
-			if(cars[i]>=0 && Math.abs(cars[i+1]-myMiddle)>=2){
-				//>=0 Àº »ç½Ç º°ÀÇ¹Ì¾øÀ½ °Å¸®°¡ 0mÀÌ»ó ¶³¾îÁ®ÀÖ³Ä´Â°Í
-				double dist = Math.sqrt(cars[i]*cars[i]+Math.abs(cars[i+1]-myMiddle)*Math.abs(cars[i+1]-myMiddle));
-				if(minDist >= dist) {
-					minDist = dist;
-					c = i;
-				}
-				
-			}
-		}
-		if(c>=0){	System.out.println("Near Dist : " + minDist);}
-		return c;
-	}
-	
-	//Á¦ÀÏ °¡±îÀÌ ºÙ¾îÀÖ´Â Â÷¿ÍÀÇ °¢µµ 
-	public static double getDegreeNearFrontCar(double myMiddle,double car,double carMiddle){
-		double c=0;
-				
-//		c = Math.atan2(Math.abs(myMiddle-carMiddle), car) - Math.PI/2 ;
-		c = Math.atan2(car, Math.abs(myMiddle-carMiddle)) - Math.PI/2 ;
-		
-		
-		System.out.println("Near Degree : " + c + " "+c*(180/Math.PI));
-		return c;
-	}
-	//µğ¹ö±ëÀ» À§ÇÑ °¢µµ º¯È¯
-	public static double toDegree(double rad){
-		return rad * 180/Math.PI;
-	}
 	public static void main(String[] args) {
 		DrivingInterface driving = new DrivingInterface();
 		DrivingController controller = new DrivingController();
