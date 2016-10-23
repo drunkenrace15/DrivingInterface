@@ -286,10 +286,10 @@ public class DrivingController {
 		 */
 		public boolean isOutOfTrack(){
 			
-			if( toMiddle < getMostRightMiddle() - 0.5 ) 
+			if( toMiddle < getMostRightMiddle() - 1 ) 
 				return true;
 			
-			if( toMiddle > getMostLeftMiddle() + 0.5 )
+			if( toMiddle > getMostLeftMiddle() + 1 )
 				return true;
 			
 			return false;
@@ -338,7 +338,13 @@ public class DrivingController {
 					data.dest_Middle = data.getMostLeftMiddle();
 				else
 					data.dest_Middle = data.getMostRightMiddle();
-				data.dest_Speed = 300;
+				
+				// 트랙별 최고속도
+				if (data.getTrackIdx() > 0 )
+					data.dest_Speed = 300;
+				else
+					data.dest_Speed = 300;
+				
 
 				IS_EMERGENCY = false;
 				return false;
@@ -897,6 +903,13 @@ public class DrivingController {
 //				0.9	/	5	/	195
 //				1	/	6	/	215
 				if( data.getKMhSpeed() < 100) {
+					if(data.dest_Speed < 0) {
+						data.accel = 0.3;
+					} else if( data.isOutOfTrack()) {
+						data.accel = 0.3;
+					} else if( IS_EMERGENCY ) {
+						data.accel = 0.3;
+					}
 					data.accel = 0.5;
 				} else if( data.getKMhSpeed() < 120) {
 					data.accel = 0.6;
