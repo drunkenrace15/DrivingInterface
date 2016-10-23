@@ -33,8 +33,10 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
          mm = 0.25;
          mm_near = 0.3;
       }else if(tracknum == 4){
-         c_max =180;
-         c_near =150;
+         c_max =150;
+         c_near =130;
+         mm = 0.3;
+         mm_near = 0.4;
       }
       
       System.out.println("tracknum" + tracknum);
@@ -89,7 +91,7 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
             if(data.getKMhSpeed() >60){
                data.dest_Speed = data.dest_Speed * 0.3;
             }
-            m_angle = 1.3;
+            m_angle = 1.4;
          }else if(Math.abs(angle_base) >8  ){
             if(data.getKMhSpeed() >60){
                data.dest_Speed =60;
@@ -104,38 +106,38 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
             if(data.getKMhSpeed() >80){
                data.dest_Speed = 80;
             }
-            m_angle = 2.4;
+            m_angle = 1;
          }else if(Math.abs(angle_base) >5 ){
             if(data.getKMhSpeed() >c_near -40){
                data.dest_Speed = c_near -40;
             }
-            m_angle = 2.1;
+            m_angle = 0.9;
          }else if(Math.abs(angle_base) >4   ){
             if(data.getKMhSpeed() >c_near -25){
                data.dest_Speed = c_near -25;
             }
-            m_angle = 2;
+            m_angle = 0.8;
          }else if(Math.abs(angle_base) >3 ){
             if(data.getKMhSpeed() >c_near-15){
                data.dest_Speed = c_near-15;
             }
-            m_angle = 1.5;
+            m_angle = 0.7;
          }else if(Math.abs(angle_base) >1.5){
             if(data.getKMhSpeed() >c_near-10){
                data.dest_Speed =c_near-10;
             }
-            m_angle = 1.4;
+            m_angle = 0.7;
          }else if(Math.abs(angle_base) >0.5){
             if(data.getKMhSpeed() >120){
                data.dest_Speed =120;
             }
-            m_angle = 1.2;
+            m_angle = 0.7;
          }
          else if(Math.abs(angle_base) >=0 ){
             if(data.getKMhSpeed() >130){
                data.dest_Speed = 130;
             }
-            m_angle = 1;
+            m_angle =0.7;
          }else{
             data.dest_Speed = c_near;
          }
@@ -227,17 +229,17 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
             if(data.getKMhSpeed() >80){
                data.dest_Speed = 80;
             }
-            m_angle = 0.9;
+            m_angle = 1;
          }else if(Math.abs(angle_base) >5 ){
             if(data.getKMhSpeed() >c_near -40){
                data.dest_Speed = c_near -40;
             }
-            m_angle = 0.8;
+            m_angle = 0.9;
          }else if(Math.abs(angle_base) >4   ){
             if(data.getKMhSpeed() >c_near -25){
                data.dest_Speed = c_near -25;
             }
-            m_angle = 0.7;
+            m_angle = 0.8;
          }else if(Math.abs(angle_base) >3 ){
             if(data.getKMhSpeed() >c_near-15){
                data.dest_Speed = c_near-15;
@@ -258,7 +260,7 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
             if(data.getKMhSpeed() >130){
                data.dest_Speed = 130;
             }
-            m_angle = 1;
+            m_angle =0.7;
          }   
          data.dest_Speed  = data.dest_Speed  -1;
             if(data.track_curve_type == DrivingInterface.curve_type_right){            
