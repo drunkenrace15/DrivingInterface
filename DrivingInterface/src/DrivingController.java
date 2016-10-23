@@ -647,7 +647,7 @@ public class DrivingController {
 	         
 	         if(tracknum == 2 && Math.abs(angle_current) >60){
 	            //System.out.println("5555555555555555555555555555555555555555");
-	            data.dest_Speed =60;
+	            data.dest_Speed =65;
 	         }
 	         
 	         data.dest_Speed  = data.dest_Speed  -1;
