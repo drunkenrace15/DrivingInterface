@@ -38,7 +38,37 @@ public class DrivingAlgorithmLauncher {
 		// Set Accel and Brake
 		if ( Math.abs(data.getKMhSpeed()) <  Math.abs(data.dest_Speed) )
 		{ 
-			data.accel = Math.abs(data.dest_Speed)/300; 
+//			data.accel = Math.abs(data.dest_Speed)/300;
+//			악셀		최종기어	최종속도
+//			0.1	/	1	/	47
+//			0.2	/	1	/	77
+//			--------------------------------------
+//			0.3	/	2	/	105
+//			0.4	/	3	/	125
+//			0.5	/	4	/	145
+//			0.6	/	4	/	165
+//			--------------------------------------
+//			0.7	/	5	/	180
+//			0.8	/	5	/	195
+//			0.9	/	5	/	195
+//			1	/	6	/	215
+			if( data.getKMhSpeed() < 50) {
+				data.accel = 0.2;
+			} else if( data.getKMhSpeed() < 100) {
+				data.accel = 0.3;
+			} else if( data.getKMhSpeed() < 120) {
+				data.accel = 0.4;
+			} else if( data.getKMhSpeed() < 140) {
+				data.accel = 0.5;
+			} else if( data.getKMhSpeed() < 160) {
+				data.accel = 0.6;
+			} else if( data.getKMhSpeed() < 180) {
+				data.accel = 0.7;
+			} else if( data.getKMhSpeed() < 200) {
+				data.accel = 0.8;
+			} else {
+				data.accel = 1;
+			}
 			data.brake = 0;
 		} else if ( Math.abs(data.getKMhSpeed()) >  Math.abs(data.dest_Speed) ) {
 			data.accel = 0;
@@ -50,6 +80,21 @@ public class DrivingAlgorithmLauncher {
 //		printCmd(data);
 		return data;
 		//-->
+		
+//		if(++tic < 250) {
+//
+//			data.backward = DrivingInterface.gear_type_backward;
+//			data.steer = 0;
+//			data.accel = 0.1;
+//			data.brake = 0;	
+//		} else {
+//		
+//			data.backward = DrivingInterface.gear_type_forward;
+//			data.steer = 0;
+//			data.accel = 1;
+//			data.brake = 0;		
+//		}
+//		return data;
 	}
 	
 	public void printCmd(DrivingData data){
