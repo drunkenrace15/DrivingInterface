@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.text.DecimalFormat;
 
 public class DrivingController {	
 
@@ -114,6 +115,30 @@ public class DrivingController {
 	public static int cnt = 0;
 	public static int block_cnt = 0;
 	
+	public class TrackData {
+		
+		double track_length;
+		double track_width;		
+		public TrackData(double length, double width) {
+			
+			this.track_length = length;
+			this.track_width = width;			
+		}
+		
+		public double getTrack_length() {
+			return track_length;
+		}
+		public void setTrack_length(double track_length) {
+			this.track_length = track_length;
+		}
+		public double getTrack_width() {
+			return track_width;
+		}
+		public void setTrack_width(double track_width) {
+			this.track_width = track_width;
+		}
+	}
+	
 	public class DrivingData {
 		
 		public static final int car_width  = 2;
@@ -149,6 +174,10 @@ public class DrivingController {
 		public double dest_Middle;
 		public double dest_Speed;
 		
+		//track information
+		public TrackData[] tracks = new TrackData[5];
+		public int track_index = -1;
+		
 		//-- remove
 		public double steer;
 		public double accel;
@@ -183,7 +212,44 @@ public class DrivingController {
 			dest_Middle			 = 0.0;
 			dest_Speed			 = 0.0;
 			backward 			 = 0;
+			setInitTracks();
 		}
+		
+		public void setInitTracks(){
+			
+			tracks[0] = new TrackData(3243.64, 15.00);			
+			tracks[1] = new TrackData(5380.50, 12.00);			
+			tracks[2] = new TrackData(4441.29, 13.00);			
+			tracks[3] = new TrackData(3260.43, 16.00);			
+			tracks[4] = new TrackData(3185.83, 15.00);			
+		}
+		
+		public int getTrackIdx(){
+			
+			double length = this.dist_track;
+			double width = this.track_width;
+			
+			String pattern = ".##";
+			DecimalFormat dformat = new DecimalFormat(pattern);
+			
+			length = Double.parseDouble(dformat.format(length));
+			width = Double.parseDouble(dformat.format(width));
+			
+			if(this.track_index == -1 && length != 0.0 && width != 0.0){
+				
+				for(int i=0;i<tracks.length;i++){
+					
+					if(tracks[i].getTrack_length() == length && tracks[i].getTrack_width() == width){
+						//return index;
+						this.track_index = i;
+						break;
+					}
+				}				
+			}
+			
+			return this.track_index;			
+		}
+
 		
 		/**
 		 * @return 트랙 가장 우측 위치 값
@@ -620,7 +686,7 @@ public class DrivingController {
 			return true;
 		}
 	}
-	 
+ 	 
 	public class EmergencyAlgorithm implements DrivingAlgorithm {
 		
 		public boolean calculate(DrivingData data) {
@@ -658,16 +724,14 @@ public class DrivingController {
 								data.dest_Middle = data.getMostRightMiddle();
 							else
 								data.dest_Middle = data.getMostLeftMiddle();
-						}
-						
-					}
-						
+						}						
+					}						
 				}
 			} else {		
 				if( data.isOutOfTrack() ) {
 					++cnt;
 					
-					if( cnt > 5 ) {
+					if( cnt > 5 || data.toMiddle != 0.0) {
 						if( data.toMiddle < 0 ) {
 
 							if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
@@ -685,16 +749,12 @@ public class DrivingController {
 							data.dest_Middle = data.getMostLeftMiddle();
 						}
 						
-						IS_EMERGENCY = true;
-						
+						IS_EMERGENCY = true;						
 					}
 					
-				} else if(data.getKMhSpeed() < 10){
-					
-					blockEscape(data);
-					
-				}else{
-					
+				} else if(data.getKMhSpeed() < 10){					
+					blockEscape(data);					
+				}else{					
 					cnt = 0;
 				}
 			}
@@ -709,7 +769,7 @@ public class DrivingController {
 		
 		void blockEscape(DrivingData data){
 						
-			if(block_cnt > 15){
+			if(block_cnt > 25){
 				
 				data.dest_Speed = -300;
 				if( data.toMiddle < 0 ) 
@@ -722,10 +782,8 @@ public class DrivingController {
 				
 			}else{
 				++block_cnt;
-			}
-			
+			}			
 		}
-
 	}
 	 
 	public class DrivingAlgorithmLauncher {
