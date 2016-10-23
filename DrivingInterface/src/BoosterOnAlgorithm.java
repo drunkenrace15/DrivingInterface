@@ -7,10 +7,8 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 		// Go!								// Go!				
 		boolean isFrontEmpty = true;
 		for(int i=0; i<10&&isFrontEmpty; i++){
-			isFrontEmpty = !(   (data.dist_cars[2*i]   < 40)
-							&&	(data.dist_cars[2*i+1] < data.toMiddle + 2.3)
-							&&	(data.dist_cars[2*i+1] > data.toMiddle - 2.3)
-							);	
+			if( isCarOnTheFront(data, i) )
+				isFrontEmpty = false;
 		}	
 		
 		if ( isFrontEmpty && data.track_dist_straight >=40 ) {
@@ -31,5 +29,12 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 		
 		return true;
 	}
-
+	
+	public boolean isCarOnTheFront(DrivingData data, int carIndex) { 
+ 		if( carIndex < 0 || carIndex > 9 )  
+ 			return false; 
+ 		 
+ 		return 		(data.dist_cars[2*carIndex]   > 0)  
+ 				&&	(Math.abs(data.toMiddle - data.dist_cars[2*carIndex+1]) < data.car_width/2);	 
+ 	} 
 }
