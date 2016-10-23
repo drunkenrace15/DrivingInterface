@@ -11,7 +11,7 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 				isFrontEmpty = false;
 		
 		if ( isFrontEmpty && data.track_dist_straight >=40 ) {
-			data.dest_Speed = 300;
+			data.dest_Speed = 250;
 		}
 		
 //		++tic;

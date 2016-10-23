@@ -78,7 +78,7 @@ public class DrivingData {
 	 * @return 트랙 가장 우측 위치 값
 	 */
 	public double getMostRightMiddle(){
-		return car_width/2 - track_width/2 + 0.5; 
+		return car_width/2 - track_width/2 + 1; 
 	}
 	
 	public double getRightMiddle(double m) {
@@ -93,7 +93,7 @@ public class DrivingData {
 	 * @return 트랙 가장 좌측 위치 값
 	 */
 	public double getMostLeftMiddle(){
-		return track_width/2 - car_width/2 - 0.5;
+		return track_width/2 - car_width/2 - 1;
 	}
 
 	public double getLeftMiddle(double m) {
