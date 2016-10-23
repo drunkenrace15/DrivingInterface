@@ -53,19 +53,19 @@ public class DrivingAlgorithmLauncher {
 //			0.9	/	5	/	195
 //			1	/	6	/	215
 			if( data.getKMhSpeed() < 50) {
-				data.accel = 0.2;
-			} else if( data.getKMhSpeed() < 100) {
 				data.accel = 0.3;
-			} else if( data.getKMhSpeed() < 120) {
+			} else if( data.getKMhSpeed() < 100) {
 				data.accel = 0.4;
-			} else if( data.getKMhSpeed() < 140) {
+			} else if( data.getKMhSpeed() < 120) {
 				data.accel = 0.5;
-			} else if( data.getKMhSpeed() < 160) {
+			} else if( data.getKMhSpeed() < 140) {
 				data.accel = 0.6;
-			} else if( data.getKMhSpeed() < 180) {
+			} else if( data.getKMhSpeed() < 160) {
 				data.accel = 0.7;
-			} else if( data.getKMhSpeed() < 200) {
+			} else if( data.getKMhSpeed() < 180) {
 				data.accel = 0.8;
+			} else if( data.getKMhSpeed() < 200) {
+				data.accel = 0.9;
 			} else {
 				data.accel = 1;
 			}
