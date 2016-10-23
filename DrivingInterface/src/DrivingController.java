@@ -333,7 +333,7 @@ public class DrivingController {
 			}
 			
 			++tic;
-			if(tic < 50 && data.track_dist_straight >=40 ) {
+			if(tic < 100 && data.track_dist_straight >=40 ) {
 				if( data.toMiddle > 0 )
 					data.dest_Middle = data.getMostLeftMiddle();
 				else
@@ -841,9 +841,7 @@ public class DrivingController {
 //				0.8	/	5	/	195
 //				0.9	/	5	/	195
 //				1	/	6	/	215
-				if( data.getKMhSpeed() < 50) {
-					data.accel = 0.4;
-				} else if( data.getKMhSpeed() < 100) {
+				if( data.getKMhSpeed() < 100) {
 					data.accel = 0.5;
 				} else if( data.getKMhSpeed() < 120) {
 					data.accel = 0.6;
