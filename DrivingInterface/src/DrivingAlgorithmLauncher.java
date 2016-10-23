@@ -63,7 +63,7 @@ public class DrivingAlgorithmLauncher {
 //		System.out.println();
 		System.out.println(data.track_current_angle);
 		for(int i=0 ;i<20 ;i++ ){
-			System.out.println(", " + data.track_Front_angles[i] + ", " + data.track_Front_dists[i]);
+			System.out.println(", " + data.track_forward_angles[i] + ", " + data.track_forward_dists[i]);
 		}
 		System.out.println();
 	}

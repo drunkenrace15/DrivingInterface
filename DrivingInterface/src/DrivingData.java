@@ -1,4 +1,4 @@
-
+﻿
 public class DrivingData {
 
 	//global data
@@ -21,8 +21,8 @@ public class DrivingData {
 	public double track_dist_straight;
 	public int track_curve_type;
 	
-	public double[] track_Front_angles;
-	public double[] track_Front_dists;
+	public double[] track_forward_angles;	
+	public double[] track_forward_dists;
 	public double track_current_angle;
 	
 	public double[] dist_cars;
@@ -56,8 +56,8 @@ public class DrivingData {
 		track_dist_straight	 = trackArray[DrivingInterface.track_dist_straight	];
 		track_curve_type	 = trackCurveType;
 
-		track_Front_angles = trackAngleArray;
-		track_Front_dists	 = trackDistArray;
+		track_forward_angles	= trackAngleArray;
+		track_forward_dists	= trackDistArray;
 		track_current_angle	 = trackCurrentAngle;
 		
 		dist_cars 			 = aicarArray;

@@ -3,15 +3,15 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
 
 	public boolean calculate(DrivingData data) {
 		// OUT - IN - OUT
-		double angle_now =  ((data.angle - data.track_Front_angles[0]) * 180/Math.PI);
-		double angle_base = ((data.track_current_angle - data.track_Front_angles[0]) * 180/Math.PI);
+		double angle_now =  ((data.angle - data.track_forward_angles[0]) * 180/Math.PI);
+		double angle_base = ((data.track_current_angle - data.track_forward_angles[0]) * 180/Math.PI);
 		double angle_c[] = new double[20];
-		angle_c[0] = ((data.track_Front_angles[0] - data.track_Front_angles[1]) * 180/Math.PI);
-		angle_c[1] = ((data.track_Front_angles[1] - data.track_Front_angles[2]) * 180/Math.PI);
-		angle_c[2] = ((data.track_Front_angles[2] - data.track_Front_angles[3]) * 180/Math.PI);
-		angle_c[3] = ((data.track_Front_angles[3] - data.track_Front_angles[4]) * 180/Math.PI);
-		angle_c[4] = ((data.track_Front_angles[4] - data.track_Front_angles[5]) * 180/Math.PI);
-		angle_c[5] = ((data.track_Front_angles[5] - data.track_Front_angles[6]) * 180/Math.PI);
+		angle_c[0] = ((data.track_forward_angles[0] - data.track_forward_angles[1]) * 180/Math.PI);
+		angle_c[1] = ((data.track_forward_angles[1] - data.track_forward_angles[2]) * 180/Math.PI);
+		angle_c[2] = ((data.track_forward_angles[2] - data.track_forward_angles[3]) * 180/Math.PI);
+		angle_c[3] = ((data.track_forward_angles[3] - data.track_forward_angles[4]) * 180/Math.PI);
+		angle_c[4] = ((data.track_forward_angles[4] - data.track_forward_angles[5]) * 180/Math.PI);
+		angle_c[5] = ((data.track_forward_angles[5] - data.track_forward_angles[6]) * 180/Math.PI);
 		
 		double mm = 0.4;
 		if(data.track_width == 12 ){//레벨 5짜리 맵
@@ -78,7 +78,7 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
 			
 			if(data.track_curve_type == DrivingInterface.curve_type_right){				
 				System.out.println("우우회전중 anlge_now : "+ angle_now+ "///// angle_base"+ angle_base);
-				data.dest_Middle = -m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+				data.dest_Middle = -m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_forward_angles[0])) * data.toMiddle);
 
 				System.out.println("우회전 ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+"//// m_angle : "+m_angle);
 				
@@ -103,7 +103,7 @@ public class CorneringAlgorithm implements DrivingAlgorithm {
 			}else if( data.track_curve_type == DrivingInterface.curve_type_left) {
 				
 //				System.out.println("★좌좌회전중 anlge_now : "+ angle_now+ "///// angle_base"+ angle_base+ "//////" +"data.speed" + data.getKMhSpeed());
-				data.dest_Middle = m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+				data.dest_Middle = m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_forward_angles[0])) * data.toMiddle);
 				System.out.println("★좌회전ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+ "//// m_angle : "+m_angle);
 				
 				double steer22 = data.angle + (data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052);		
