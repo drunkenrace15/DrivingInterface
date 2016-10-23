@@ -50,7 +50,16 @@ public class DrivingAlgorithmLauncher {
 //			0.9	/	5	/	195
 //			1	/	6	/	215
 			if( data.getKMhSpeed() < 100) {
-				data.accel = 0.4;
+
+				if(data.dest_Speed < 0) {
+					data.accel = 0.3;
+				} else if( data.isOutOfTrack()) {
+					data.accel = 0.3;
+				} else if( data.IS_EMERGENCY ) {
+					data.accel = 0.3;
+				}
+				data.accel = 0.5;
+				 
 			} else if( data.getKMhSpeed() < 120) {
 				data.accel = 0.5;
 			} else if( data.getKMhSpeed() < 140) {

@@ -21,7 +21,12 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 				data.dest_Middle = data.getMostLeftMiddle();
 			else
 				data.dest_Middle = data.getMostRightMiddle();
-			data.dest_Speed = 300;
+
+			// 트랙별 최고속도
+			if (data.getTrackIdx() > 0 )
+				data.dest_Speed = 300;
+			else
+				data.dest_Speed = 300;
 
 			data.IS_EMERGENCY = false;
 			return false;
