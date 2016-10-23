@@ -16,7 +16,7 @@ public class BoosterOnAlgorithm implements DrivingAlgorithm {
 		}
 		
 		++tic;
-		if(tic < 50 && data.track_dist_straight >=40 ) {
+		if(tic < 70 && data.track_dist_straight >=40 ) {
 			if( data.toMiddle > 0 )
 				data.dest_Middle = data.getMostLeftMiddle();
 			else
