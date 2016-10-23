@@ -114,6 +114,8 @@ public class DrivingController {
 	public static int tic = 0;
 	public static int cnt = 0;
 	public static int block_cnt = 0;
+	public static int curve_type_right = 1;	
+	public static int curve_type_left = 2;
 	
 	public class TrackData {
 		
@@ -530,10 +532,10 @@ public class DrivingController {
 	
 	      else if (data.track_dist_straight > 45  && data.track_dist_straight <130) {   
 	         //System.out.println("OIO 시도 : "+  ">A///// angle_base"+ angle_base+ "//////" +"data.speed" + data.getKMhSpeed());   
-	         if( data.track_curve_type == DrivingInterface.curve_type_right) { 
+	         if( data.track_curve_type == curve_type_right) { 
 	            data.dest_Middle = data.getLeftMiddle(mm); 
 	         } 
-	         if( data.track_curve_type == DrivingInterface.curve_type_left) { 
+	         if( data.track_curve_type == curve_type_left) { 
 	            data.dest_Middle = data.getRightMiddle(mm); 
 	         } 
 	//         if(Math.abs(data.toMiddle) < 1) 
@@ -555,9 +557,9 @@ public class DrivingController {
 	            data.dest_Speed = c_near;
 	//         }
 	         
-	         if(data.track_curve_type == DrivingInterface.curve_type_right){         
+	         if(data.track_curve_type == curve_type_right){         
 	            data.dest_Middle = data.getRightMiddle(mm_near);// 오른쪽으로
-	         }else if(data.track_curve_type == DrivingInterface.curve_type_left){         
+	         }else if(data.track_curve_type == curve_type_left){         
 	            data.dest_Middle = data.getLeftMiddle(mm_near); //왼쪽으로
 	         }
 	      }
@@ -649,7 +651,7 @@ public class DrivingController {
 	         }
 	         
 	         data.dest_Speed  = data.dest_Speed  -1;
-	            if(data.track_curve_type == DrivingInterface.curve_type_right){            
+	            if(data.track_curve_type == curve_type_right){            
 	            //System.out.println("우우회전중 angle_current : "+  angle_current+"data.speed" + data.getKMhSpeed());
 	//            data.dest_Middle = -m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
 	            //data.dest_Middle = data.getRightMiddle(m_angle); 
@@ -693,7 +695,7 @@ public class DrivingController {
 	//               data.dest_Speed = 70;
 	//            }
 	            
-	         }else if( data.track_curve_type == DrivingInterface.curve_type_left) {
+	         }else if( data.track_curve_type == curve_type_left) {
 	            
 	            //System.out.println("★좌좌회전중 angle_current : "+ angle_current+"data.speed" + data.getKMhSpeed());
 	//            if(data.toMiddle >0)
