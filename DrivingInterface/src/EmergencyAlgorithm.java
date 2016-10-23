@@ -3,6 +3,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 
 	static int cnt = 0;
 	static int block_cnt = 0;
+	static int emergency_speed = 0;
 	
 	public boolean calculate(DrivingData data) {
 			
@@ -11,38 +12,16 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 								
 				if( data.toMiddle < 0 ) {
 
-					if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
-						data.dest_Speed = -50;
-					else
-						data.dest_Speed = 50;	
+					data.dest_Speed = emergency_speed;	
 					data.dest_Middle = data.getMostRightMiddle()/2;
 				}
 				else{
 
-					if( data.angle > Math.PI*-3/4 && data.angle < Math.PI*-1/4 )
-						data.dest_Speed = -50;
-					else
-						data.dest_Speed = 50;	
+					data.dest_Speed = emergency_speed;
 					data.dest_Middle = data.getMostLeftMiddle()/2;
 				}
 			} else {
-				
-//				if(data.getKMhSpeed() < 10){
-//					blockEscape(data);
-//				}else{
-//					
-//					if( data.getKMhSpeed() < 30 )
-						data.IS_EMERGENCY = false;
-//					else {
-//						data.dest_Speed = 0;
-//						if( data.toMiddle < 0 ) 
-//							data.dest_Middle = data.getMostRightMiddle();
-//						else
-//							data.dest_Middle = data.getMostLeftMiddle();
-//					}
-//					
-//				}
-					
+				data.IS_EMERGENCY = false;					
 			}
 		} else {		
 			if( data.isOutOfTrack() ) {
@@ -52,30 +31,23 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 					if( data.toMiddle < 0 ) {
 
 						if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
-							data.dest_Speed = -50;
+							emergency_speed = -50;
 						else
-							data.dest_Speed = 50;	
+							emergency_speed = 50;	
 						data.dest_Middle = data.getMostRightMiddle()/2;
 					}
 					else{
 
 						if( data.angle > Math.PI*-3/4 && data.angle < Math.PI*-1/4 )
-							data.dest_Speed = -50;
+							emergency_speed = -50;
 						else
-							data.dest_Speed = 50;	
+							emergency_speed = 50;	
 						data.dest_Middle = data.getMostLeftMiddle()/2;
 					}
 					
 					data.IS_EMERGENCY = true;					
 				}
-			}
-//				
-//			} else if(data.getKMhSpeed() < 10){
-//				
-//				blockEscape(data);
-//				
-//			}
-			else{				
+			} else{				
 				cnt = 0;
 			}
 		}
@@ -92,8 +64,8 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 		
 		System.out.println("block!!! : " + block_cnt);
 		
-		if(block_cnt > 25){
-			
+		if(block_cnt > 25){			
+
 			data.dest_Speed = -300;
 			if( data.toMiddle < 0 ) 
 				data.dest_Middle = data.getMostRightMiddle()/2;
