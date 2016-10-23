@@ -45,12 +45,12 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 					
 			}
 			
-//			System.out.println("1번");
+//			System.out.println("1踰�");
 		} else {		
 			if( data.isOutOfTrack() ) {
 				++cnt;
 				
-				if( cnt > 5 ) {
+				if( cnt > 5 || data.toMiddle != 0.0) {
 					if( data.toMiddle < 0 ) {
 
 						if( data.angle > Math.PI*1/4 && data.angle < Math.PI*3/4 )
@@ -80,9 +80,9 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 			}else{
 				
 				cnt = 0;
-//				System.out.println("2번");
+//				System.out.println("2踰�");
 			}
-//			System.out.println("3번");
+//			System.out.println("3踰�");
 		}
 		
 		if(data.getKMhSpeed() < 10){
@@ -96,9 +96,9 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 	
 	void blockEscape(DrivingData data){
 		
-//		System.out.println("block!!! : " + block_cnt);
+		System.out.println("block!!! : " + block_cnt);
 		
-		if(block_cnt > 15){
+		if(block_cnt > 25){
 			
 			data.dest_Speed = -300;
 			if( data.toMiddle < 0 ) 
@@ -116,3 +116,4 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 	}
 
 }
+
