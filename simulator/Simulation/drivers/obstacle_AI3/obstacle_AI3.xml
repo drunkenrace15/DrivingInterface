@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    file                 : chenyi_AI3.xml
+    file                 : obstacle_AI3.xml
     created              : 2014年 09月 01日 星期一 13:08:25 EDT
     copyright            : (C) 2002 Chenyi Chen
 -->
@@ -11,11 +11,11 @@
 <!--    (at your option) any later version.                                   -->
 
 <!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
-<params name="chenyi_AI3" type="robotdef">
+<params name="obstacle_AI3" type="robotdef">
   <section name="Robots">
     <section name="index">
       <section name="1">
-	<attstr name="name" val="chenyi_AI3"></attstr>
+	<attstr name="name" val="obstacle_AI3"></attstr>
 	<attstr name="desc" val=""></attstr>
 	<attstr name="team" val=""></attstr>
 	<attstr name="author" val="Chenyi Chen"></attstr>
