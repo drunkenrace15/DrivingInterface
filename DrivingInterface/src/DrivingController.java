@@ -382,8 +382,8 @@ public class DrivingController {
 	      double mm = 0.32;
 	      double mm_near = 0.5;
 	      if(tracknum == 0){
-	         c_max =180;
-	         c_near =150;
+	         c_max =170;
+	         c_near =140;
 	         mm = 0.3;
 	      }else if(tracknum == 1){
 	         c_max =120;
