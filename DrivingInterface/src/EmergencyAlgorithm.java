@@ -7,7 +7,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 	public boolean calculate(DrivingData data) {
 			
 		if( data.IS_EMERGENCY) {
-			if( data.isOutOfTrack() ) {
+			if( data.angle > 1 && data.isOutOfTrack() ) {
 								
 				if( data.toMiddle < 0 ) {
 
@@ -15,7 +15,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 						data.dest_Speed = -50;
 					else
 						data.dest_Speed = 50;	
-					data.dest_Middle = data.getMostRightMiddle();
+					data.dest_Middle = data.getMostRightMiddle()/2;
 				}
 				else{
 
@@ -23,29 +23,27 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 						data.dest_Speed = -50;
 					else
 						data.dest_Speed = 50;	
-					data.dest_Middle = data.getMostLeftMiddle();
+					data.dest_Middle = data.getMostLeftMiddle()/2;
 				}
 			} else {
 				
-				if(data.getKMhSpeed() < 10){
-					blockEscape(data);
-				}else{
-					
-					if( data.getKMhSpeed() < 30 )
+//				if(data.getKMhSpeed() < 10){
+//					blockEscape(data);
+//				}else{
+//					
+//					if( data.getKMhSpeed() < 30 )
 						data.IS_EMERGENCY = false;
-					else {
-						data.dest_Speed = 0;
-						if( data.toMiddle < 0 ) 
-							data.dest_Middle = data.getMostRightMiddle();
-						else
-							data.dest_Middle = data.getMostLeftMiddle();
-					}
-					
-				}
+//					else {
+//						data.dest_Speed = 0;
+//						if( data.toMiddle < 0 ) 
+//							data.dest_Middle = data.getMostRightMiddle();
+//						else
+//							data.dest_Middle = data.getMostLeftMiddle();
+//					}
+//					
+//				}
 					
 			}
-			
-//			System.out.println("1踰�");
 		} else {		
 			if( data.isOutOfTrack() ) {
 				++cnt;
@@ -57,7 +55,7 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 							data.dest_Speed = -50;
 						else
 							data.dest_Speed = 50;	
-						data.dest_Middle = data.getMostRightMiddle();
+						data.dest_Middle = data.getMostRightMiddle()/2;
 					}
 					else{
 
@@ -65,24 +63,21 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 							data.dest_Speed = -50;
 						else
 							data.dest_Speed = 50;	
-						data.dest_Middle = data.getMostLeftMiddle();
+						data.dest_Middle = data.getMostLeftMiddle()/2;
 					}
 					
-					//
-					data.IS_EMERGENCY = true;
-					
+					data.IS_EMERGENCY = true;					
 				}
-				
-			} else if(data.getKMhSpeed() < 10){
-				
-				blockEscape(data);
-				
-			}else{
-				
-				cnt = 0;
-//				System.out.println("2踰�");
 			}
-//			System.out.println("3踰�");
+//				
+//			} else if(data.getKMhSpeed() < 10){
+//				
+//				blockEscape(data);
+//				
+//			}
+			else{				
+				cnt = 0;
+			}
 		}
 		
 		if(data.getKMhSpeed() < 10){
@@ -90,7 +85,6 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 		}
 		
 		return ! data.IS_EMERGENCY;
-//		return true;
 	}
 	
 	
@@ -102,9 +96,9 @@ public class EmergencyAlgorithm implements DrivingAlgorithm {
 			
 			data.dest_Speed = -300;
 			if( data.toMiddle < 0 ) 
-				data.dest_Middle = data.getMostRightMiddle();
+				data.dest_Middle = data.getMostRightMiddle()/2;
 			else
-				data.dest_Middle = data.getMostLeftMiddle();
+				data.dest_Middle = data.getMostLeftMiddle()/2;
 			
 			data.IS_EMERGENCY = true;
 			block_cnt = 0;

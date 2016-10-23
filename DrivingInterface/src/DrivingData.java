@@ -162,10 +162,10 @@ public class DrivingData {
 	 */
 	public boolean isOutOfTrack(){
 		
-		if( toMiddle < getMostRightMiddle() - 0.5 ) 
+		if( toMiddle < getMostRightMiddle() - 1 ) 
 			return true;
 		
-		if( toMiddle > getMostLeftMiddle() + 0.5 )
+		if( toMiddle > getMostLeftMiddle() + 1 )
 			return true;
 		
 		return false;
