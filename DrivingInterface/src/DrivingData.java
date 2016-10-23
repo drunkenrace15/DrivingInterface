@@ -1,6 +1,5 @@
 ﻿import java.text.DecimalFormat;
 
-
 public class DrivingData {
 
 	//global data
@@ -85,17 +84,11 @@ public class DrivingData {
 	}
 	
 	public void setInitTracks(){
-		
-		tracks[0] = new TrackData(3243.64, 15.00);
-		
-		tracks[1] = new TrackData(5380.50, 12.00);
-		
-		tracks[2] = new TrackData(4441.29, 13.00);
-		
-		tracks[3] = new TrackData(3260.43, 16.00);
-		
-		tracks[4] = new TrackData(3185.83, 15.00);
-		
+		tracks[0] = new TrackData(3185.83, 15.00);
+        tracks[1] = new TrackData(3243.64, 15.00);
+        tracks[2] = new TrackData(5380.50, 12.00);         
+        tracks[3] = new TrackData(4441.29, 13.00);         
+        tracks[4] = new TrackData(3260.43, 16.00);	
 	}
 	
 	public int getTrackIdx(){

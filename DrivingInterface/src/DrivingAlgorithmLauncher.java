@@ -58,7 +58,7 @@ public class DrivingAlgorithmLauncher {
 				} else if( data.IS_EMERGENCY ) {
 					data.accel = 0.3;
 				}
-				data.accel = 0.5;
+				data.accel = 0.5;     
 				 
 			} else if( data.getKMhSpeed() < 120) {
 				data.accel = 0.5;
