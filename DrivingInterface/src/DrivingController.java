@@ -332,7 +332,7 @@ public class DrivingController {
 			}
 			
 			++tic;
-			if(tic < 70 && data.track_dist_straight >=40 ) {
+			if(tic < 100 && data.track_dist_straight >=40 ) {
 				if( data.toMiddle > 0 )
 					data.dest_Middle = data.getMostLeftMiddle();
 				else
@@ -382,6 +382,7 @@ public class DrivingController {
 	      if(tracknum == 0){
 	         c_max =180;
 	         c_near =150;
+	         mm = 0.3;
 	      }else if(tracknum == 1){
 	         c_max =120;
 	         c_near =90;
@@ -389,19 +390,20 @@ public class DrivingController {
 	         c_max =110;
 	         c_near =100;
 	         mm = 0.2;
-	         mm_near = 0.7;
+	         mm_near = 0.8;
 	      }else if(tracknum == 3){
 	         c_max =130;
 	         c_near =120;
 	         mm = 0.25;
 	         mm_near = 0.3;
 	      }else if(tracknum == 4){
-	         c_max =150;
+	         c_max =140;
 	         c_near =130;
 	         mm = 0.3;
 	         mm_near = 0.4;
 	      }
 	      
+	      //System.out.println("tracknum" + tracknum);
 	      
 	      int bef_curve_type = data.track_curve_type;
 	      
@@ -423,6 +425,11 @@ public class DrivingController {
 	      angle_c[14] = ((data.track_forward_angles[14] - data.track_forward_angles[15]) * 180/Math.PI);
 	      
 	      
+	//      if(data.track_width == 12 ){//레벨 5짜리 맵
+	//         mm = 0.13;
+	//      }else if(data.track_width == 13 ){//레벨 4짜리 맵
+	//         mm = 0.17;
+	//      }
 	      double m_angle = 0.1;
 	      
 	      //짧은 s라인 체크
@@ -442,6 +449,7 @@ public class DrivingController {
 	      }
 	      
 	      if (plus && minus){
+	         //System.out.println("짧은 s라인 체크");
 	         
 	         if(Math.abs(angle_base) >9  ){
 	            if(data.getKMhSpeed() >60){
@@ -477,45 +485,75 @@ public class DrivingController {
 	            if(data.getKMhSpeed() >c_near-15){
 	               data.dest_Speed = c_near-15;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }else if(Math.abs(angle_base) >1.5){
 	            if(data.getKMhSpeed() >c_near-10){
 	               data.dest_Speed =c_near-10;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }else if(Math.abs(angle_base) >0.5){
 	            if(data.getKMhSpeed() >120){
 	               data.dest_Speed =120;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }
 	         else if(Math.abs(angle_base) >=0 ){
 	            if(data.getKMhSpeed() >130){
 	               data.dest_Speed = 130;
 	            }
-	            m_angle =0.7;
+	            m_angle =0.8;
 	         }else{
 	            data.dest_Speed = c_near;
 	         }
 	         
+	         if(Math.abs(angle_current) >120){
+	            //System.out.println("5555555555555555555555555555555555555555");
+	            data.dest_Speed =65;
+	         }
+	         
+	         if(tracknum == 2 && Math.abs(angle_current) >60){
+	            //System.out.println("5555555555555555555555555555555555555555");
+	            data.dest_Speed =65;
+	         }
+	         
+	//         if(Math.abs(data.toMiddle) < 1) 
+	//            data.dest_Middle = 0;
+	//         else {
+	//            if( data.toMiddle < 0 )
 	               data.dest_Middle = data.toMiddle;//왼쪽으로
+	//            else
+	//               data.dest_Middle = data.toMiddle;// 오른쪽
+	//         }
 	      }
 	         //S
+	//      //System.out.println("angle_base "+angle_base + ", data.track_dist_straight"+data.track_dist_straight+" data.speed" + data.getKMhSpeed());
 	
 	      else if (data.track_dist_straight > 45  && data.track_dist_straight <130) {   
+	         //System.out.println("OIO 시도 : "+  ">A///// angle_base"+ angle_base+ "//////" +"data.speed" + data.getKMhSpeed());   
 	         if( data.track_curve_type == DrivingInterface.curve_type_right) { 
 	            data.dest_Middle = data.getLeftMiddle(mm); 
 	         } 
 	         if( data.track_curve_type == DrivingInterface.curve_type_left) { 
 	            data.dest_Middle = data.getRightMiddle(mm); 
 	         } 
+	//         if(Math.abs(data.toMiddle) < 1) 
+	//            data.dest_Middle = 0;
+	//         else {
+	//            if( data.toMiddle < 0 )
+	//               data.dest_Middle = data.toMiddle + 0.5;//왼쪽으로
+	//            else
+	//               data.dest_Middle = data.toMiddle - 0.5;// 오른쪽
+	//         }
 	         if(data.getKMhSpeed() >c_max){
 	            data.dest_Speed = data.getKMhSpeed() -2;
 	         }
 	         data.dest_Speed =c_max;
 	      
 	      }else if(data.track_dist_straight >0 && data.track_dist_straight < 45 ){
+	         //System.out.println("코너링 근접!!!!!!!!!!!!!!!!!!!1"+data.speed);
+	//         if(data.getKMhSpeed() >150){
 	            data.dest_Speed = c_near;
+	//         }
 	         
 	         if(data.track_curve_type == DrivingInterface.curve_type_right){         
 	            data.dest_Middle = data.getRightMiddle(mm_near);// 오른쪽으로
@@ -523,10 +561,28 @@ public class DrivingController {
 	            data.dest_Middle = data.getLeftMiddle(mm_near); //왼쪽으로
 	         }
 	      }
+	//      else if(data.track_dist_straight >0 && data.track_dist_straight < 30){// 회전 하기 전에
+	//         
+	//         if(data.track_curve_type == DrivingInterface.curve_type_right){            
+	////            //System.out.println("회전 하기 전에 우회전중 angle_current : "+  angle_current+"data.speed" + data.getKMhSpeed());
+	//            data.dest_Middle = data.getRightMiddle(1);
+	////            //System.out.println("회전 하기 전에 우회전 ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+"//// m_angle : "+m_angle);
+	//         
+	//         }else if( data.track_curve_type == DrivingInterface.curve_type_left) {            
+	////            //System.out.println("★회전 하기 전에 좌회전중 angle_current : "+ angle_current+"data.speed" + data.getKMhSpeed());
+	//            data.dest_Middle = data.getLeftMiddle(1);
+	////            //System.out.println("★회전 하기 전에 좌회전ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+ "//// m_angle : "+m_angle);
+	//            
+	//         }
+	//      }
 	      else if(Math.abs(angle_base) > 1 || Math.abs(angle_c[0]) > 1 || data.track_dist_straight ==0 ){// 현재 회전중이라면
+	         //System.out.println("track_dist_straight"+ data.track_dist_straight);
+	         //System.out.println("angle_base"+ angle_base + "맵 : "+ angle_c[0]+", "+angle_c[1] + " " + angle_c[2] + " " + angle_c[3] +  " " + angle_c[4]
+//	               + " " + angle_c[5] +  " " + angle_c[6]);
 	
 	         //앞 트랙과 그 앞앞 트랙의 각도에 따른 속도 조절 부여
 	         
+	//         angle_base = (angle_c[0]+angle_c[1]+angle_c[2])/3;
 	         
 	         if(Math.abs(angle_base) >9  ){
 	            if(data.getKMhSpeed() >60){
@@ -562,26 +618,50 @@ public class DrivingController {
 	            if(data.getKMhSpeed() >c_near-15){
 	               data.dest_Speed = c_near-15;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }else if(Math.abs(angle_base) >1.5){
 	            if(data.getKMhSpeed() >c_near-10){
 	               data.dest_Speed =c_near-10;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }else if(Math.abs(angle_base) >0.5){
 	            if(data.getKMhSpeed() >120){
 	               data.dest_Speed =120;
 	            }
-	            m_angle = 0.7;
+	            m_angle = 0.8;
 	         }
 	         else if(Math.abs(angle_base) >=0 ){
 	            if(data.getKMhSpeed() >130){
 	               data.dest_Speed = 130;
 	            }
-	            m_angle =0.7;
+	            m_angle =0.8;
 	         }   
+	         
+	         if(Math.abs(angle_current) >120){
+	            //System.out.println("5555555555555555555555555555555555555555");
+	            data.dest_Speed =60;
+	         }
+	         
+	         if(tracknum == 2 && Math.abs(angle_current) >60){
+	            //System.out.println("5555555555555555555555555555555555555555");
+	            data.dest_Speed =60;
+	         }
+	         
 	         data.dest_Speed  = data.dest_Speed  -1;
 	            if(data.track_curve_type == DrivingInterface.curve_type_right){            
+	            //System.out.println("우우회전중 angle_current : "+  angle_current+"data.speed" + data.getKMhSpeed());
+	//            data.dest_Middle = -m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+	            //data.dest_Middle = data.getRightMiddle(m_angle); 
+	            
+	//            if(data.toMiddle >0)//왼쪽 차선에 있을때
+	//            {            
+	////               data.dest_Middle =  data.toMiddle -m_angle;//m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+	//               data.dest_Middle = -m_angle*Math.abs( data.toMiddle/ Math.cos(Math.abs(data.track_current_angle - data.track_Front_angles[0])));
+	//            
+	//            }else{//오른쪽 차선에 있을때
+	////               data.dest_Middle = data.toMiddle -m_angle;//m_angle * Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+	//               data.dest_Middle = -m_angle*Math.abs( data.toMiddle/ Math.cos(Math.abs(data.track_current_angle - data.track_Front_angles[0])));
+	//            }
 	            
 	            if( data.toMiddle - m_angle > data.getMostRightMiddle()+1) {//중앙에서 왹각으로 서서히
 	               data.dest_Middle = data.toMiddle - m_angle;
@@ -591,22 +671,70 @@ public class DrivingController {
 	               data.dest_Middle = data.getMostRightMiddle()+1;
 	            }
 	            
+	//            data.dest_Middle = data.getRightMiddle(m_angle);
+	            //System.out.println("우회전 ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+"//// m_angle : "+m_angle);
+	            
+	//            double steer22 = ata.angle + (data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052);      
+	//            //System.out.print(steer22);
+	            //System.out.print(data.angle);
+	            //System.out.println("+"+(data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052));   
+	            
+	//            if(angle_c[0]== 0 && angle_c[1]== 0 && angle_c[2]  == 0&&angle_c[3] == 0){
+	//               //System.out.println("급 회전 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	//               data.dest_Speed = data.dest_Speed -3;
+	//            }
+	//            if(angle_now < -88){
+	//               ////System.out.println("급 우회전 88도"+angle_now);
+	//               data.dest_Speed = 60;
+	//            }
+	//            else if(angle_now < -60){
+	//               ////System.out.println("급 우회전 60도"+angle_now);
+	//               data.dest_Speed = 70;
+	//            }
 	            
 	         }else if( data.track_curve_type == DrivingInterface.curve_type_left) {
 	            
+	            //System.out.println("★좌좌회전중 angle_current : "+ angle_current+"data.speed" + data.getKMhSpeed());
+	//            if(data.toMiddle >0)
+	//            {            
+	////               data.dest_Middle = data.toMiddle +Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+	//               data.dest_Middle =  Math.abs( data.toMiddle/ Math.cos(Math.abs(data.track_current_angle - data.track_Front_angles[0])));
+	//               
+	//            }else{
+	////               data.dest_Middle =  Math.abs(Math.sin(Math.PI/2 - (data.track_current_angle - data.track_Front_angles[0])) * data.toMiddle);
+	//               data.dest_Middle = Math.abs( data.toMiddle/ Math.cos(Math.abs(data.track_current_angle - data.track_Front_angles[0])));
+	//            }
+	//            data.dest_Middle = data.getLeftMiddle(data.toMiddle/angle_base); 
 	            
 	            if( data.toMiddle + m_angle < data.getMostLeftMiddle()-1) {
+	               //System.out.println("1111111111111111111111111111111111111111111111");
 	               data.dest_Middle = data.toMiddle + m_angle;
 	            } else if (data.toMiddle > data.getMostLeftMiddle()-1) {
+	               //System.out.println("22222222222222222222222222222222222222222222222");
 	               data.dest_Middle = data.getMostLeftMiddle()-0.6;      
 	            } else {
+	               //System.out.println("33333333333333333333333333333333333333333333333");
 	               data.dest_Middle = data.getMostLeftMiddle()-1;
 	            }
 	            
+	//            data.dest_Middle = data.getLeftMiddle(m_angle);
+	            //System.out.println("★좌회전ToMIddle "+ data.toMiddle + " // dest_Middle : "+ data.dest_Middle+ "//// m_angle : "+m_angle);
 	            
 	            double steer22 = data.angle + (data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052);      
+	            //System.out.print(steer22+"////"+ data.steer);
+	            //System.out.print("= " + data.angle);
+	            //System.out.println(" "+(data.dest_Middle - data.toMiddle)/data.track_width * (1/0.541052));   
+	//            if(angle_now < -88){
+	//               ////System.out.println("급 좌회전 80도"+angle_now);
+	//               data.dest_Speed = 60;
+	//            }
+	//            else if(angle_now < -60){
+	//               ////System.out.println("급 좌회전 60도"+angle_now);
+	//               data.dest_Speed = 70;
+	//            }
 	         }
 	      }else {//코너링 나왔을 때 가운데로 가게하는 소스
+	         //System.out.println("코너링 나왔을 때 가운데로 가게하는 소스");
 	         if(Math.abs(data.toMiddle) < 1) 
 	            data.dest_Middle = 0;
 	         else {
@@ -625,9 +753,9 @@ public class DrivingController {
 		public boolean calculate(DrivingData data) {
 			// Evasion Steering	
 			
-			//////////System.out.printlnln("Track width = " + data.track_width);
+			////////////System.out.printlnln("Track width = " + data.track_width);
 			double currentSpeed = data.getKMhSpeed();
-			//////////System.out.printlnln("Speed = " + currentSpeed);
+			////////////System.out.printlnln("Speed = " + currentSpeed);
 			double sight = 0;
 			double angle = 0;
 			
@@ -711,7 +839,7 @@ public class DrivingController {
 					if( data.dist_cars[i+1] > data.toMiddle - 2 &&
 					    data.dist_cars[i+1] < data.toMiddle + 2){
 						 chkInBack= true;
-						 ////////System.out.printlnln("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
+						 //////////System.out.printlnln("dist_cars = ["+i+"] = "+data.dist_cars[i] +" ["+(i+1)+"] = "+data.dist_cars[i+1] );
 							
 						break;
 					}		
@@ -879,20 +1007,27 @@ public class DrivingController {
 		
 		void blockEscape(DrivingData data){
 						
-			if(block_cnt > 25){
-				
-				data.dest_Speed = -300;
-				if( data.toMiddle < 0 ) 
-					data.dest_Middle = data.getMostRightMiddle();
-				else
-					data.dest_Middle = data.getMostLeftMiddle();
-				
-				IS_EMERGENCY = true;
-				block_cnt = 0;
-				
-			}else{
-				++block_cnt;
-			}			
+			if(block_cnt > 27){
+		         
+		         data.dest_Speed = -300;
+		         if( data.toMiddle < 0 ){
+		            if(data.toMiddle < -8){
+		               data.dest_Middle = data.getMostRightMiddle();
+		            }
+		         }
+		         else{
+		            if(data.toMiddle > 8){
+		               data.dest_Middle = data.getMostLeftMiddle();
+		            }
+		         }
+		            
+		         
+		         IS_EMERGENCY = true;
+		         block_cnt = 0;
+		         
+		      }else{
+		         ++block_cnt;
+		      }
 		}
 	}
 	 
